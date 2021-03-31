@@ -1,0 +1,39 @@
+.addNewOrderBackground {
+    background-color: #f2f5f9;
+    width: 100vw;
+}
+
+.addNewOrder {
+    background-color: white;
+    max-width: 1000px;
+    display: block;
+    margin: auto;
+    padding: 2rem;
+}
+
+.backgroundGrey{
+    background-color: #f2f5f9;
+    padding: 0.3rem;
+    font-weight: bold;
+    color: gray;
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
+.addOrderButton {
+    width: fit-content !important;
+    margin: 1rem 0.5rem 0 0.5rem !important;
+    float: right;
+}
+
+.addOrderCancelButton {
+    width: fit-content !important;
+    margin: 1rem 0.5rem 0 0.5rem !important;
+    float: right;
+    color: black !important;
+    background-color: white !important;
+}
+
+.addOrderBackButton {
+    margin: 1rem 0.5rem 0 0.5rem !important;
+}

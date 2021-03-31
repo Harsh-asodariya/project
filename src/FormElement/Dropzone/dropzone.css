@@ -1,0 +1,10 @@
+.orColumn {
+    text-align: center;
+    font-weight:500;
+    padding-right: 0% !important;
+}
+
+.uploadButton {
+    color: black !important;
+    background-color: white !important;
+}

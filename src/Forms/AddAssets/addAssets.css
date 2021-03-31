@@ -1,0 +1,34 @@
+.addAssetBackground {
+    background-color: #f2f5f9;
+    width: 100vw;
+}
+
+.addAsset {
+    background-color: white;
+    max-width: 1000px;
+    display: block;
+    margin: auto;
+    padding: 2rem;
+}
+
+.col {
+    margin: 0 !important;
+}
+
+.addAssetsButton {
+    width: fit-content !important;
+    margin: 1rem 0.5rem 0 0.5rem!important;
+    float: right;
+}
+
+.addAssetsCancelButton {
+    width: fit-content !important;
+    margin: 1rem 0.5rem 0 0.5rem !important;
+    float: right;
+    color: black !important;
+    background-color: white !important;
+}
+
+.addAssetsBackButton {
+    margin: 1rem 0.5rem 0 0.5rem !important;
+}

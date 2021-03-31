@@ -1,0 +1,54 @@
+.bottomNavigationbar{
+    background-color: #01a1dd !important;
+    font-weight: 600;
+    padding: 0px 0px 0px 0px !important;
+}
+
+a{
+    color: white !important;
+}
+
+.nav-link > i{
+    margin: 0 5px 0 0;
+}
+
+.nav-link{
+    padding: 8px 24px !important;
+}
+
+.nav-item:hover {
+    background-color: #0981af;
+}
+
+.active{
+    background-color: #076185;
+}
+
+.orderLink{
+    float: right;
+}
+
+.navbar-toggler:focus {
+    box-shadow: 0 0 0 0 !important;
+}
+
+.navbar-toggler{
+    width: 75px;
+    padding: 4px 0px !important;
+}
+
+.navbar-toggler-icon {
+    width: 50px !important;
+}
+
+
+element.style {
+}
+
+@media (min-width: 768px) {
+    .orderNavItem{
+        position: absolute;
+    top: 0%;
+    right: 3%;
+    }  
+}

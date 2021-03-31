@@ -1,0 +1,54 @@
+.topNavigation{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2rem;
+    flex-wrap: wrap;
+}
+
+.circleButton{
+    border-radius: 50% !important;
+    width: 38px;
+    height: 38px;
+    padding: 0% !important;
+    background-color: #dc3545 !important;
+    color: white !important;
+    font-weight: 700 !important;
+    text-align: center !important;
+    border: none !important;
+}
+
+.logoDiv{
+    margin: 0.5rem 0;
+}
+
+.circleButtonDiv{
+    display: flex;
+    flex-direction: row;
+    width: 225px;
+    justify-content: space-evenly;
+    margin: 0.5rem 0;
+}
+
+.role, .email{
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.bellSvg{
+    height: 23px;
+    width: 23px;
+    transform: rotate(25deg);
+}
+
+.butoonDropDown{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* .dropdown-toggle{
+    padding: 0px !important;
+    width:fit-content !important;
+    align-items: center;
+} */
