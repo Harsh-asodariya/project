@@ -1,0 +1,87 @@
+table {
+    font-family: 'Trebuchet MS', Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+table td,
+table th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+table th {
+    position: sticky;
+    top:0;
+}
+
+table tr:nth-child(odd) {
+    background-color: #f2f2f2;
+}
+
+table tr:nth-child(even) {
+    background-color: white;
+}
+
+table tr:hover {
+    background-color: #ddd;
+}
+
+table th,
+tfoot td {
+    /* padding-top: 12px;
+    padding-bottom: 12px; */
+    text-align: center;
+    background-color: white;
+    color: #6c757d;
+}
+
+.pagination{
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 16px;
+    align-items: center;
+    background-color: white;
+}
+
+.paginationButton {
+    width: fit-content;
+    background-color: rgb(199, 194, 194);
+    color: black;
+    border: none;
+    margin: 0px 8px;
+}
+
+.pageIndex{
+    background-color: #01a1dd;
+    border: none;
+    border-radius: 80%;
+    font-weight: bold;
+    font-size: 20px;
+    pointer-events: none;
+}
+
+.rowPerPage{
+    display: flex;
+}
+
+.rowPerPage > li {
+    padding: 0px 5px;
+    font-size: 20px;
+}
+
+.rowPerPage > li:hover {
+    cursor: pointer;
+}
+
+.page-item {
+    width:fit-content;
+    height: fit-content;
+    border-radius: 4px;
+    margin: 0px 5px;
+}
+
+.active {
+    background-color: #01a1dd;
+    color: white;
+}

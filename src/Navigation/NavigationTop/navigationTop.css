@@ -47,6 +47,20 @@
     align-items: center;
 }
 
+.dropdown-item:focus, .dropdown-item:hover {
+    color: #16181b !important;
+    text-decoration: none !important;
+    background-color: unset !important;
+}
+
+.dropdown-item {
+    padding:  0 !important;
+}
+
+/* .signOutButton{
+    color: #ff0000 !important;
+} */
+
 /* .dropdown-toggle{
     padding: 0px !important;
     width:fit-content !important;

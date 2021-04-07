@@ -1,0 +1,15 @@
+.videosInProduction{
+    background-color: #f2f5f9;
+}
+
+.videosInProductionTitle{
+    font-size: 22px !important;
+    font-weight: 700;
+    color: #323f48;
+}
+
+.filterButton{
+    background-color: #343a40;
+    font-size: 16px;
+    font-weight: 600;
+}

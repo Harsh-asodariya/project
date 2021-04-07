@@ -1,6 +1,8 @@
 const regex_nonempty = /^(?!\s*$).+$/;
 const regex_email = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-const regex_phone = /^[0-9]{10}/
+const regex_phone = /^(\d{3})\-(\d{3})\-(\d{4})/
+const regex_postalUS = /(^\d{5}$)|(^\d{5}-\d{4}$)/
+const regex_postalCA = /^[ABCEGHJKLMNPRSTVXY][0-9][ABCEGHJKLMNPRSTVWXYZ] ?[0-9][ABCEGHJKLMNPRSTVWXYZ][0-9]$/
 
 export const regex={
     companyName: regex_nonempty,
@@ -15,7 +17,8 @@ export const regex={
     city: regex_nonempty,
     country: regex_nonempty,
     state: regex_nonempty,
-    postal: regex_nonempty,
+    postalUS: regex_postalUS,
+    postalCA: regex_postalCA,
     advertiser: regex_nonempty,
     title: regex_nonempty,
     prefferedLandingPageUrl: regex_nonempty,

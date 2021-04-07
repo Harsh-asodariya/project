@@ -18,6 +18,22 @@ import {Label} from 'reactstrap';
 // );
 
 class SelectField extends Component {
+    // componentDidMount = () => {
+    //     console.log('component did mount', this.props.name)
+    //     if(this.props.value !== null){
+    //         let options = this.props.options
+    //         let selectedOption
+    //         for(let index in options){
+    //             if(options[index].value === this.props.value){
+    //                 selectedOption=index;
+    //                 break;
+    //             }
+    //         }
+    //         this.setState({value:options[0]})
+    //     }
+        
+    // }
+
     handleChange = (event, name) => {
         this.props.onChange(event,name)
     }   
@@ -37,17 +53,6 @@ class SelectField extends Component {
     //     this.setState({ isSearchable: !this.state.isSearchable });
 
     render() {
-        let selectedOption
-        if(this.props.value !== ""){
-            
-            let options = this.props.options
-            for(let index in options){
-                if(options[index].value === this.props.value){
-                    selectedOption=index;
-                    break;
-                }
-            }
-        }
         return (
             <div>
                 <Label for={this.props.for} className='fw-bold text-black '>
@@ -56,6 +61,7 @@ class SelectField extends Component {
                 </Label>
                 <Select
                     id={this.props.id}
+                    value={this.props.value}
                     onChange={(event) => this.handleChange(event,this.props.name)}
                     className='basic-single'
                     classNamePrefix='select'
@@ -64,9 +70,11 @@ class SelectField extends Component {
                     // isClearable={this.state.isClearable}
                     // isRtl={this.state.isRtl}
                     // isSearchable={this.state.isSearchable}
-                    defaultValue={this.props.options[selectedOption]} 
+                    // defaultValue={this.props.options[selectedOption]}
                     name={this.props.name}
                     options={this.props.options}
+                    isDisabled={this.props.disabled}
+                
                 />
                 {/* <Note Tag="label">
                     <Checkbox

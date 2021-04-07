@@ -6,10 +6,42 @@ import { Col, Row } from 'reactstrap';
 import Textarea from '../../FormElement/Textarea/textarea';
 import { Button } from 'reactstrap';
 import { validationHandler } from '../../Shared/Validation/validation';
+import axios from 'axios'
+import {connect} from 'react-redux'
 
-function AddNewOrder({ next, previous, orderData, setOrderData }) {
+function AddNewOrder({ next, previous, orderData, setOrderData, client }) {
 
-    const data = {...orderData.data} 
+    const data = { ...orderData.data }
+    const [marketOption , setMarketOption] = useState()
+    const [advertiserOption , setAdvertiserOption] = useState()
+
+    useEffect(() => {
+        const headers = {
+            // 'Content-Type': 'application/json',
+            'x-token': localStorage.getItem('token')
+        }
+        axios.get('http://localhost:3000/api/wholesalepricing/getMarkets',{headers:headers})
+            .then(res => {
+                let markets = res.data.data
+                setMarketOption(markets.map(market => {
+                    return { value: market.name, label: market.name }
+                })
+
+                )
+            })
+            .catch(res => console.log(res))
+        
+        axios.get('http://localhost:3000/api/company/clients', { headers: headers })
+            .then(res => {
+                let advertisers = res.data.data
+                setAdvertiserOption(advertisers.map(advertiser => {
+                    return { value: advertiser.id, label: advertiser.companyName }
+                })
+                )
+            })
+            .catch(res => console.log(res))
+    }, [])
+
 
     // useEffect(() => {
     //     let valid = true
@@ -29,29 +61,50 @@ function AddNewOrder({ next, previous, orderData, setOrderData }) {
     }
 
     const onChangeHandler = (event, name) => {
-        let isValid,tempdata,validated
+        let isValid, tempdata, validated
         if (name) {
             isValid = validationHandler(name, event.value)
-            tempdata = { ...data, [name]: { value: event.value, touched: true, valid: isValid } }
+            tempdata = { ...data, [name]: { value: event, touched: true, valid: isValid } }
             validated = submitButtonHandler(tempdata)
         } else {
             isValid = validationHandler(event.target.name, event.target.value)
             tempdata = { ...data, [event.target.name]: { value: event.target.value, touched: true, valid: isValid } }
             validated = submitButtonHandler(tempdata)
         }
-        setOrderData({ ...orderData, data:tempdata, validated:validated })
+        setOrderData({ ...orderData, data: tempdata, validated: validated })
     }
 
     const createOrder = () => {
-        console.log(orderData)
+        // let campaignData = {
+        //     "clientCompanyID": data.advertiser.value.value,
+        //     "title": data.title.value,
+        //     "description": data.description.value,
+        //     "landingpageURL": data.prefferedLandingPageUrl.value,
+        //     "targetMarket": data.targetMarket.value.value,
+        //     "distributionBudget": data.budget.value,
+        //     "startDate": "04/22/2021",
+        //     "price": data.price.value,
+        //     "soaID": client.salesOrgCompany.soaID,
+        //     "sosID": client.salesOrgCompany.sosID,
+        //     "salesOrgCompanyID": client.salesOrgCompany.parentSalesOrgCompanyID,
+        //     "statusByPersonID": client.person.createdByPerson,
+        //     "statusWithPersonID": client.salesOrgCompany.clientPersonID
+        // }
+        // console.log(campaignData)
+        // const headers = {
+        //     'Content-Type': 'application/json',
+        //     'x-token': localStorage.getItem('token')
+        // }
+        // axios.post('http://localhost:3000/api/campaign/',campaignData,{headers:headers})
+        //     .then(res => {
+        //         // setClientResponseData(res.data.data)
+        //         console.log(res.data)
+        //         next()
+        //     })
+        //     .catch(error => console.log(error.response.data.errorMessage))
         next()
     }
-    let carOptions = [
-        { value: 'tesla', label: 'Tesla' },
-        { value: 'lamborgini', label: 'Lamborgini' },
-        { value: 'jaguar', label: 'Jaguar' },
-        { value: 'fortuner', label: 'Fortuner' }
-    ]
+    
     return (
         <div className='addNewOrderBackground'>
             <div className='addNewOrder'>
@@ -62,7 +115,8 @@ function AddNewOrder({ next, previous, orderData, setOrderData }) {
                 </Row>
                 <Row>
                     <Col md={6}>
-                        <FloatingInput error={data.advertiser.touched && !data.advertiser.valid ? 'inValid' : ''} name="advertiser" onChange={onChangeHandler} value={data.advertiser.value} type='name' label='Advertiser' placeholder='Advertiser' id="advertiser" for="floatingInput" />
+                        <SelectField name="advertiser" onChange={onChangeHandler} value={data.advertiser.value} id='advertiser' options={advertiserOption} label='Advertiser' />
+                        {/* <FloatingInput error={data.advertiser.touched && !data.advertiser.valid ? 'inValid' : ''} name="advertiser" onChange={onChangeHandler} value={data.advertiser.value} type='name' label='Advertiser' placeholder='Advertiser' id="advertiser" for="floatingInput" /> */}
                     </Col>
                     <Col md={6}>
                         <FloatingInput error={data.title.touched && !data.title.valid ? 'inValid' : ''} name="title" onChange={onChangeHandler} value={data.title.value} type='name' label='Title' placeholder='Title' id="title" for="floatingInput" />
@@ -73,7 +127,7 @@ function AddNewOrder({ next, previous, orderData, setOrderData }) {
                         <FloatingInput error={data.prefferedLandingPageUrl.touched && !data.prefferedLandingPageUrl.valid ? 'inValid' : ''} name="prefferedLandingPageUrl" onChange={onChangeHandler} value={data.prefferedLandingPageUrl.value} type='name' label='Preffered Landing Page URL' placeholder='Preffered Landing Page URL' id="prefferedLandingPageURL" for="floatingInput" />
                     </Col>
                     <Col md={6}>
-                        <FloatingInput error={data.price.touched && !data.price.valid ? 'inValid' : ''} name="price" onChange={onChangeHandler} value={data.price.value} type='name' label='Price' placeholder='Price' id="price" for="floatingInput" />
+                        <FloatingInput error={data.price.touched && !data.price.valid ? 'inValid' : ''} name="price" onChange={onChangeHandler} value={data.price.value} type="number" label='Price' placeholder='Price' id="price" for="floatingInput" />
                     </Col>
                 </Row>
                 <Row>
@@ -89,10 +143,10 @@ function AddNewOrder({ next, previous, orderData, setOrderData }) {
                 </Row>
                 <Row>
                     <Col md={6}>
-                        <SelectField name="targetMarket" onChange={onChangeHandler} value={data.targetMarket.value} id='targetMarket' options={carOptions} label='Target Market' />
+                        <SelectField name="targetMarket" onChange={onChangeHandler} value={data.targetMarket.value} id='targetMarket' options={marketOption} label='Target Market' />
                     </Col>
                     <Col md={6}>
-                        <FloatingInput error={data.budget.touched && !data.budget.valid ? 'inValid' : ''} name="budget" onChange={onChangeHandler} value={data.budget.value} type='text' label='Budget' placeholder='Budget' id="budget" for="floatingInput" />
+                        <FloatingInput error={data.budget.touched && !data.budget.valid ? 'inValid' : ''} name="budget" onChange={onChangeHandler} value={data.budget.value} type='number' label='Budget' placeholder='Budget' id="budget" for="floatingInput" />
                     </Col>
                 </Row>
                 <Row>
@@ -110,4 +164,10 @@ function AddNewOrder({ next, previous, orderData, setOrderData }) {
     )
 }
 
-export default AddNewOrder
+const mapStateToProps = state => {
+    return{
+        client: state.response.client
+    }
+}
+
+export default connect(mapStateToProps)(AddNewOrder)

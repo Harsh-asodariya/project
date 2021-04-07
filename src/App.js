@@ -12,6 +12,7 @@ import Dashboard from './Dashboard/dashboard';
 import { connect } from 'react-redux';
 import Login from './LoginScreen/Login/login';
 import ChangePassword from './ChangePassword/changePassword';
+import VideosInProduction from './VideosInProduction/videosInProduction';
 // import * as actions from './Store/Actions/auth';
 // import AddNewAdvertiser from './Forms/AddNewAdvertiser/addNewAdvertiser'
 // import AddNewOrder from './Forms/AddNewOrder/addNewOrder';
@@ -38,6 +39,7 @@ const App = (props) => {
         <Route path='/advertiser' exact component={Advertiser} />
         <Route path='/order' exact component={Order} />
         <Route path='/changePassword' exact component={ChangePassword} />
+        <Route path='/videosinproduction' exact component={VideosInProduction} />
         {/* <Route path='/signup' component={signUpScreen} /> */}
         <Redirect to='/dashboard' />
       </Switch>)
@@ -52,7 +54,7 @@ const App = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    isAuthenticated: state.authenticated
+    isAuthenticated: state.auth.authenticated
   }
 }
 

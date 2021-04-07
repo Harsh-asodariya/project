@@ -10,13 +10,37 @@ import axios from 'axios';
 import NavigationItems from '../Navigation/NavigationItems/navigationItems';
 
 const ChangePassword = props => {
+
     const [password, setPassword] = useState({
         currentPassword: '',
-        newPassword:'',
-        confirmPassword:''
+        newPassword: '',
+        confirmPassword: ''
     })
+
     const passwordChangeHandler = () => {
-        console.log(password)
+        if (password.newPassword === password.confirmPassword) {
+            let data = {
+                "oldPassword": password.currentPassword,
+                "newPassword": password.newPassword
+            }
+            const headers = {
+                'Content-Type': 'application/json',
+                'x-token': props.token
+            }
+            axios.post('http://localhost:3000/api/person/changePassword', data, { headers: headers })
+                .then(res => {
+                    if (res.data.success === true) {
+                        alert('success')
+                        localStorage.setItem('token', res.data.data.token)
+                        props.passwordChangeHandler(res.data.data.token)
+                        props.history.push('/dashboard')
+                    }
+                })
+                .catch(res => console.log(res))
+        } else {
+            console.log(props.token)
+            alert('Password does not match')
+        }
         // axios.post('http://localhost:3000/pub/login', userDetail)
         //     .then(res => {
         //         if (res.data.success === true) {
@@ -33,32 +57,38 @@ const ChangePassword = props => {
         //     }
         // }
     }
-    const onChangeHandler = (event) => {
-        setPassword({ ...password, [event.target.name]: event.target.value })
-    }
-    return (
-        <>
-            <div className='changePassword'>
-                <NavigationItems />
-                <div className="changePasswordBox w-100 mx-auto">
-                    <div className='formBox'>
-                        <form>
-                            <FloatingInput classes='border-top-0 border-left-0 border-right-0 rounded-0' autoComplete="cc-csc" onChange={onChangeHandler} value={password.currentPassword} type='password' name='currentPassword' label='Current Password' placeholder='Enter currentPassword' id="currentPasswordfloatingInput" for="floatingInput" />
-                            <FloatingInput classes='border-top-0 border-left-0 border-right-0 rounded-0' autoComplete="cc-csc" onChange={onChangeHandler} value={password.newPassword} type='password' name='newPassword' label='New Password' placeholder='Enter newPassword' id="newPasswordfloatingInput" for="floatingInput" />
-                            <FloatingInput classes='border-top-0 border-left-0 border-right-0 rounded-0' autoComplete="cc-csc" onChange={onChangeHandler} value={password.confirmPassword} type='password' name='confirmPassword' label='Confirm Password' placeholder='Confirm Password' id="confirmPasswordfloatingInput" for="floatingInput" />
-                            <Button color="primary" onClick={passwordChangeHandler} className='loginButton'>Chnage password</Button>
-                        </form>
+        const onChangeHandler = (event) => {
+            setPassword({ ...password, [event.target.name]: event.target.value })
+        }
+        return (
+            <>
+                <div className='changePassword'>
+                    <NavigationItems />
+                    <div className="changePasswordBox w-100 mx-auto">
+                        <div className='formBox'>
+                            <form>
+                                <FloatingInput classes='border-top-0 border-left-0 border-right-0 rounded-0' autoComplete="cc-csc" onChange={onChangeHandler} value={password.currentPassword} type='password' name='currentPassword' label='Current Password' placeholder='Enter currentPassword' id="currentPasswordfloatingInput" for="floatingInput" />
+                                <FloatingInput classes='border-top-0 border-left-0 border-right-0 rounded-0' autoComplete="cc-csc" onChange={onChangeHandler} value={password.newPassword} type='password' name='newPassword' label='New Password' placeholder='Enter newPassword' id="newPasswordfloatingInput" for="floatingInput" />
+                                <FloatingInput classes='border-top-0 border-left-0 border-right-0 rounded-0' autoComplete="cc-csc" onChange={onChangeHandler} value={password.confirmPassword} type='password' name='confirmPassword' label='Confirm Password' placeholder='Confirm Password' id="confirmPasswordfloatingInput" for="floatingInput" />
+                                <Button color="primary" onClick={passwordChangeHandler} className='loginButton'>Chnage password</Button>
+                            </form>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </>
-    )
-}
+            </>
+        )
+    }
 
-// const mapDispatchToProps = dispatch => {
-//     return {
-//         loginSuccessHandler: (token, personData) => dispatch(actions.loginSuccessHandler(token, personData))
-//     }
-// }
+    const mapStateToProps = state => {
+        return {
+            token: state.token
+        }
+    }
 
-export default connect()(withRouter(ChangePassword))
+    const mapDispatchToProps = dispatch => {
+        return {
+            passwordChangeHandler: (data, props) => dispatch(actions.passwordChangeHandler(data))
+        }
+    }
+
+    export default connect(mapStateToProps, mapDispatchToProps)(withRouter(ChangePassword))

@@ -48,6 +48,8 @@ class FloatingInput extends Component {
                     onChange={this.props.onChange}
                     name={this.props.name}
                     autoComplete={this.props.autoComplete}
+                    maxLength={this.props.maxLength}
+                    disabled={this.props.disabled}
                 />
             </div>
         )

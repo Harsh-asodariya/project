@@ -13,7 +13,7 @@ const Order = () => {
     data: {
       companyName: { value: '', touched: false, valid: false },
       companyWebsiteAddress: { value: '', touched: false, valid: false },
-      industryCategory: { value: '', touched: false, valid: false },
+      industryCategory: { value: null, touched: false, valid: false },
       firstName: { value: '', touched: false, valid: false },
       lastName: { value: '', touched: false, valid: false },
       email: { value: '', touched: false, valid: false },
@@ -21,8 +21,8 @@ const Order = () => {
       address: { value: '', touched: false, valid: false },
       addressLine2: { value: '', touched: false, valid: false },
       city: { value: '', touched: false, valid: false },
-      country: { value: '', touched: false, valid: false },
-      state: { value: '', touched: false, valid: false },
+      country: { value: null, touched: false, valid: false },
+      state: { value: null, touched: false, valid: false },
       postal: { value: '', touched: false, valid: false },
     },
     secondaryContact: {
@@ -35,23 +35,25 @@ const Order = () => {
       address: { value: '', touched: false, valid: false },
       addressLine2: { value: '', touched: false, valid: false },
       city: { value: '', touched: false, valid: false },
-      country: { value: '', touched: false, valid: false },
-      state: { value: '', touched: false, valid: false },
+      country: { value: null, touched: false, valid: false },
+      state: { value: null, touched: false, valid: false },
       postal: { value: '', touched: false, valid: false },
     },
     validated: false,
     secondaryContactCheck: false,
-    secondaryBillingAddressCheck: false
+    secondaryBillingAddressCheck: false,
+    isCountry:false,
+    secIsCountry:false
   })
-
+  
   const [orderData, setOrderData] = useState({
     data: {
-      advertiser: { value: '', touched: false, valid: false },
+      advertiser: { value: null, touched: false, valid: false },
       title: { value: '', touched: false, valid: false },
       prefferedLandingPageUrl: { value: '', touched: false, valid: false },
       price: { value: '', touched: false, valid: false },
       description: { value: '', touched: false, valid: false },
-      targetMarket: { value: '', touched: false, valid: false },
+      targetMarket: { value: null, touched: false, valid: false },
       budget: { value: '', touched: false, valid: false },
     },
 
@@ -113,3 +115,11 @@ const stepsArray = [
 ];
 
 export default Order;
+
+
+
+
+
+
+
+

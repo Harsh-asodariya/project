@@ -15,8 +15,16 @@ const reducer = (state = initialState, action) => {
                 token:action.token,
                 personData: action.personData
             }
+        case actionTypes.PASSWORD_CHANGE:
+            return{
+                ...state,
+                token:action.token
+            }
+        case actionTypes.SIGN_OUT:
+            return{
+                ...initialState
+            }
         default:
-            console.log('Should not reach default')
             return state
     }
 }
