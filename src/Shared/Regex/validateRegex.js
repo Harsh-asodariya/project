@@ -1,6 +1,6 @@
 const regex_nonempty = /^(?!\s*$).+$/;
 const regex_email = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-const regex_phone = /^(\d{3})\-(\d{3})\-(\d{4})/
+const regex_phone = /^(\d{3})-(\d{3})-(\d{4})/
 const regex_postalUS = /(^\d{5}$)|(^\d{5}-\d{4}$)/
 const regex_postalCA = /^[ABCEGHJKLMNPRSTVXY][0-9][ABCEGHJKLMNPRSTVWXYZ] ?[0-9][ABCEGHJKLMNPRSTVWXYZ][0-9]$/
 

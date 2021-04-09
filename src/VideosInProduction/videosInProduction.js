@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Col, Row } from 'reactstrap'
+import { Button } from 'reactstrap'
 import NavigationItems from '../Navigation/NavigationItems/navigationItems'
 import { PaginationTable } from './Table/table'
 import './videosInProduction.css'

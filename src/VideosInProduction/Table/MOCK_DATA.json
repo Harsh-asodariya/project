@@ -1,4 +1,5 @@
-[{"id":1,"first_name":"Torie","last_name":"Rustman","email":"trustman0@amazon.co.uk","date_of_birth":"1979-11-16T23:04:32Z","age":45,"country":"Argentina","phone":"6844103517"},
+[
+    {"id":1,"first_name":"Torie","last_name":"Rustman","email":"trustman0@amazon.co.uk","date_of_birth":"1979-11-16T23:04:32Z","age":45,"country":"Argentina","phone":"6844103517"},
     {"id":2,"first_name":"Kordula","last_name":"Gecks","email":"kgecks1@deviantart.com","date_of_birth":"1997-08-06T21:07:34Z","age":30,"country":"Greece","phone":"8429683893"},
     {"id":3,"first_name":"Vikki","last_name":"Simoens","email":"vsimoens2@ted.com","date_of_birth":"2016-04-28T16:59:19Z","age":48,"country":"Czech Republic","phone":"8672773997"},
     {"id":4,"first_name":"Burnaby","last_name":"Cowern","email":"bcowern3@forbes.com","date_of_birth":"2017-10-25T08:05:50Z","age":54,"country":"Equatorial Guinea","phone":"4257971694"},

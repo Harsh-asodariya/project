@@ -77,7 +77,6 @@ export default class Stepper extends Component {
   }
 
   render() {
-    const { direction } = this.props;
     const { steps } = this.state;
     const stepsJSX = steps.map((step, index) => {
       return (
@@ -100,7 +99,6 @@ export default class Stepper extends Component {
 }
 
 Stepper.propTypes = {
-  direction: PropTypes.string.isRequired,
   currentStepNumber: PropTypes.number.isRequired,
   steps: PropTypes.array.isRequired,
 };

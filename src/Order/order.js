@@ -62,9 +62,9 @@ const Order = () => {
 
   const [assets, setAssets] = useState({
     data: {
-      scriptFile: { value: [], touched: false, valid: false },
-      voiceFile: { value: [], touched: false, valid: false },
-      advertiserAssets: { value: [], touched: true, valid: true },
+      scriptFile: { value: null, touched: false, valid: false },
+      voiceFile: { value: null, touched: false, valid: false },
+      advertiserAssets: { value: null, touched: true, valid: true },
     },
     validated: false
   })

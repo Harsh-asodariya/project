@@ -3,7 +3,8 @@ import * as actionTypes from '../Actions/actionTypes';
 const initialState = {
     authenticated: false,
     token:null,
-    personData: null
+    personData: null,
+    loading:false
 }
 
 const reducer = (state = initialState, action) => {
@@ -23,6 +24,11 @@ const reducer = (state = initialState, action) => {
         case actionTypes.SIGN_OUT:
             return{
                 ...initialState
+            }
+        case actionTypes.SET_SPINNER:
+            return{
+                ...state,
+                loading:action.value
             }
         default:
             return state

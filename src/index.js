@@ -16,7 +16,6 @@ const rootReducer = combineReducers({
   response: formResponseReducer
 })
 
-
 // const composeEnhancers = process.env.NODE_ENV === 'developement' ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : null || compose
 
 const composeEnhancers =

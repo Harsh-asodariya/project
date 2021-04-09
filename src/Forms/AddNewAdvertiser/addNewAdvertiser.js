@@ -6,9 +6,14 @@ import SelectField from '../../FormElement/Select/select';
 import { validationHandler } from '../../Shared/Validation/validation';
 import axios from 'axios';
 import * as actions from '../../Store/Actions/formResponse';
-import {connect} from 'react-redux'
+import { connect } from 'react-redux';
+import { createClient, getCountries, getIndustries, getStates } from '../../Api/Api';
+import BackDrop from '../../Shared/Backdrop/Backdrop';
+import Spinner from '../../Shared/Spinner/Spinner';
 
 function AddNewAdvertiser({ next, advertiserData, setAdvertiserData, setClientResponseData }) {
+
+    const [isLoading, setIsLoading] = useState(false)
 
     const [countriesOption, setCountriesOption] = useState()
     const [stateOptions, setStateOption] = useState()
@@ -28,24 +33,6 @@ function AddNewAdvertiser({ next, advertiserData, setAdvertiserData, setClientRe
             cleaned = `${match[1]}${match[2] ? '-' : ''}${match[2]}${match[3] ? '-' : ''}${match[3]}`;
         }
         return cleaned
-
-        // if (phoneNumberString.length <= 3) {
-        //     return phoneNumberString
-        // } else if (phoneNumberString.length <= 6) {
-        //     var match = cleaned.match(/^(\d{3})+(\d{0,3})$/);
-        //     if (match) {
-        //         return match[1] + '-' + match[2]
-        //     }
-
-        // } else if (phoneNumberString.length <= 10) {
-        //     var match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
-        //     if (match) {
-        //         return match[1] + '-' + match[2] + '-' + match[3];
-        //     }
-
-        // }
-
-        // return phoneNumberString;
     }
 
     const createAdvertiserHandler = () => {
@@ -72,7 +59,7 @@ function AddNewAdvertiser({ next, advertiserData, setAdvertiserData, setClientRe
         // } else {
         //     billing = business
         // }
-        
+
         // let clientData = {
         //     "companyName": data.companyName.value,
         //     "industryID": data.industryCategory.value.value,
@@ -100,6 +87,20 @@ function AddNewAdvertiser({ next, advertiserData, setAdvertiserData, setClientRe
         //     }
         //     clientData['secondaryContact'] = clientSecondaryContact
         // }
+
+        // setIsLoading(true)
+        // createClient(clientData)
+        //     .then(res => {
+        // setIsLoading(false)
+            //         setClientResponseData(res)
+            //         next()
+            //     })
+            // .catch(err => {
+            //     setIsLoading(false)
+            //     alert(err.message)
+            // })
+
+
         // const headers = {
         //     'Content-Type': 'application/json',
         //     'x-token': localStorage.getItem('token')
@@ -116,56 +117,82 @@ function AddNewAdvertiser({ next, advertiserData, setAdvertiserData, setClientRe
 
     useEffect(() => {
         if (advertiserData.secIsCountry) {
-            axios.get(`http://localhost:3000/pub/states/${secondaryBilling.country.value.value}`)
+            getStates(secondaryBilling.country.value.value)
                 .then(res => {
-                    let states = res.data.data
+                    let states = res
                     setSecStateOption(states.map(state => {
                         return { value: state.code, label: state.name }
                     })
                     )
                 })
-                .catch(res => console.log(res))
+                .catch(err => alert(err.message))
+            // axios.get(`http://localhost:3000/pub/states/${secondaryBilling.country.value.value}`)
+            //     .then(res => {
+            //         let states = res.data.data
+            //         setSecStateOption(states.map(state => {
+            //             return { value: state.code, label: state.name }
+            //         })
+            //         )
+            //     })
+            //     .catch(res => console.log(res))
         }
-    }, [secondaryBilling.country.value])
+    }, [secondaryBilling.country.value, advertiserData.secIsCountry])
 
     useEffect(() => {
         if (advertiserData.isCountry) {
-            axios.get(`http://localhost:3000/pub/states/${data.country.value.value}`)
+            getStates(data.country.value.value)
                 .then(res => {
-                    let states = res.data.data
+                    let states = res
                     setStateOption(states.map(state => {
                         return { value: state.code, label: state.name }
                     })
                     )
                 })
-                .catch(res => console.log(res))
+                .catch(err => alert(err.message))
+            // axios.get(`http://localhost:3000/pub/states/${data.country.value.value}`)
+            //     .then(res => {
+            //         let states = res.data.data
+            //         setStateOption(states.map(state => {
+            //             return { value: state.code, label: state.name }
+            //         })
+            //         )
+            //     })
+            //     .catch(res => console.log(res))
         }
-    }, [data.country.value])
+    }, [data.country.value, advertiserData.isCountry])
 
     useEffect(() => {
-        axios.get('http://localhost:3000/pub/country/')
+        getCountries()
             .then(res => {
-                let countries = res.data.data
+                let countries = res
                 setCountriesOption(countries.map(country => {
                     return { value: country.code, label: country.name }
                 })
-
                 )
             })
-            .catch(res => console.log(res))
-        const headers = {
-            // 'Content-Type': 'application/json',
-            'x-token': localStorage.getItem('token')
-        }
-        axios.get('http://localhost:3000/api/wholesalepricing/getIndustries', { headers: headers })
+            .catch(err => alert(err.message))
+        getIndustries()
             .then(res => {
-                let industries = res.data.data
+                let industries = res.data
                 setIndustryOptions(industries.map(industry => {
                     return { value: industry.id, label: industry.name }
                 })
                 )
             })
-            .catch(res => console.log(res))
+            .catch(err => alert(err.message))
+        // const headers = {
+        //     // 'Content-Type': 'application/json',
+        //     'x-token': localStorage.getItem('token')
+        // }
+        // axios.get('http://localhost:3000/api/wholesalepricing/getIndustries', { headers: headers })
+        //     .then(res => {
+        //         let industries = res.data.data
+        //         setIndustryOptions(industries.map(industry => {
+        //             return { value: industry.id, label: industry.name }
+        //         })
+        //         )
+        //     })
+        //     .catch(res => console.log(res))
     }, [])
 
     const submitButtonHandler = (data1, data2, data3) => {
@@ -192,7 +219,7 @@ function AddNewAdvertiser({ next, advertiserData, setAdvertiserData, setClientRe
             if (name === 'country') {
                 // document.getElementById('state').clearValue()
                 let isValid = validationHandler(name, event.value)
-                tempdata = { ...data, [name]: { value: event, touched: true, valid: isValid }, ['state']: { value: null, touched: false, valid: false }, ['postal']: { value: '', touched: false, valid: false } }
+                tempdata = { ...data, [name]: { value: event, touched: true, valid: isValid }, 'state': { value: null, touched: false, valid: false }, 'postal': { value: '', touched: false, valid: false } }
                 let validated = submitButtonHandler(tempdata)
                 setAdvertiserData({ ...advertiserData, data: tempdata, validated: validated, isCountry: true })
             } else {
@@ -218,16 +245,16 @@ function AddNewAdvertiser({ next, advertiserData, setAdvertiserData, setClientRe
             setAdvertiserData({ ...advertiserData, [event.target.name]: event.target.checked, validated: validated })
         } else {
             let isValid
-            if(event.target.name === 'postal'){
+            if (event.target.name === 'postal') {
                 isValid = validationHandler(`postal${data.country.value.value}`, event.target.value)
-            }else {
+            } else {
                 isValid = validationHandler(event.target.name, event.target.value)
             }
             if (event.target.name === 'phone') {
                 let tempdata = { ...data, [event.target.name]: { value: formatPhoneNumber(event.target.value), touched: true, valid: isValid } }
                 let validated = submitButtonHandler(tempdata)
                 setAdvertiserData({ ...advertiserData, data: tempdata, validated: validated })
-            } 
+            }
             else {
                 let tempdata = { ...data, [event.target.name]: { value: event.target.value, touched: true, valid: isValid } }
                 let validated = submitButtonHandler(tempdata)
@@ -264,7 +291,7 @@ function AddNewAdvertiser({ next, advertiserData, setAdvertiserData, setClientRe
             if (name === 'country') {
                 // document.getElementById('state').clearValue()
                 let isValid = validationHandler(name, event.value)
-                tempdata = { ...secondaryBilling, [name]: { value: event, touched: true, valid: isValid }, ['state']: { value: null, touched: false, valid: false }, ['postal']: { value: '', touched: false, valid: false } }
+                tempdata = { ...secondaryBilling, [name]: { value: event, touched: true, valid: isValid }, 'state': { value: null, touched: false, valid: false }, 'postal': { value: '', touched: false, valid: false } }
                 let validated = submitButtonHandler(tempdata, data)
                 setAdvertiserData({ ...advertiserData, secondaryBilling: tempdata, validated: validated, secIsCountry: true })
             } else {
@@ -275,10 +302,10 @@ function AddNewAdvertiser({ next, advertiserData, setAdvertiserData, setClientRe
             }
         } else {
             let isValid
-            if(event.target.name === 'postal'){
+            if (event.target.name === 'postal') {
                 console.log('inpostalsec')
                 isValid = validationHandler(`postal${secondaryBilling.country.value.value}`, event.target.value)
-            }else {
+            } else {
                 isValid = validationHandler(event.target.name, event.target.value)
             }
             let tempdata = { ...secondaryBilling, [event.target.name]: { value: event.target.value, touched: true, valid: isValid } }
@@ -343,101 +370,104 @@ function AddNewAdvertiser({ next, advertiserData, setAdvertiserData, setClientRe
     }
 
     return (
-        <div className='addNewAdvertiser'>
-            <Row>
-                <Col md={6}>
-                    <FloatingInput name="companyName" error={data.companyName.touched && !data.companyName.valid ? 'inValid' : ''} onChange={onChangeHandler} value={data.companyName.value} type='name' label='Company Name' placeholder='Company Name' id="CompanyName" for="floatingInput" />
-                </Col>
-                <Col md={6}>
-                    <FloatingInput error={data.companyWebsiteAddress.touched && !data.companyWebsiteAddress.valid ? 'inValid' : ''} name="companyWebsiteAddress" onChange={onChangeHandler} value={data.companyWebsiteAddress.value} type='name' label='Company Website Address' placeholder='Company Website Address' id="CompanyWebsiteAddress" for="floatingInput" />
-                </Col>
-            </Row>
-            <Row>
-                <Col md={6}>
-                    <SelectField name="industryCategory" id="industryCategory" value={data.industryCategory.value} onChange={onChangeHandler} options={industryOptions} label='Industry Category' />
-                </Col>
-            </Row>
-            <Row>
-                <Col className='backgroundGrey m-3'>
-                    Primary Contact
+        <>
+            <BackDrop show={isLoading}><Spinner /></BackDrop>
+            <div className='addNewAdvertiser'>
+                <Row>
+                    <Col md={6}>
+                        <FloatingInput name="companyName" error={data.companyName.touched && !data.companyName.valid ? 'inValid' : ''} onChange={onChangeHandler} value={data.companyName.value} type='name' label='Company Name' placeholder='Company Name' id="CompanyName" for="floatingInput" />
                     </Col>
-            </Row>
-            <Row>
-                <Col md={6}>
-                    <FloatingInput error={data.firstName.touched && !data.firstName.valid ? 'inValid' : ''} name="firstName" onChange={onChangeHandler} value={data.firstName.value} type='name' label='First Name' placeholder='First Name' id="firstName" for="floatingInput" />
-                </Col>
-                <Col md={6}>
-                    <FloatingInput error={data.lastName.touched && !data.lastName.valid ? 'inValid' : ''} name="lastName" onChange={onChangeHandler} value={data.lastName.value} type='name' label='Last Name' placeholder='Last Name' id="lastName" for="floatingInput" />
-                </Col>
-            </Row>
-            <Row>
-                <Col md={6}>
-                    <FloatingInput error={data.email.touched && !data.email.valid ? 'inValid' : ''} name="email" onChange={onChangeHandler} value={data.email.value} type='name' label='Email' placeholder='Email' id="Email" for="floatingInput" />
-                </Col>
-                <Col md={6}>
-                    <FloatingInput error={data.phone.touched && !data.phone.valid ? 'inValid' : ''} maxLength={12} name="phone" onChange={onChangeHandler} value={data.phone.value} type='name' label='Phone' placeholder='Phone' id="Phone" for="floatingInput" />
-                </Col>
-            </Row>
-            <Row>
-                <Col className='backgroundGrey mb-3 mx-3'>
-                    <input name="secondaryContactCheck" id='secondaryContactCheck' className="secondaryContactCheck" onChange={onChangeHandler} checked={advertiserData.secondaryContactCheck} type='checkbox' />
+                    <Col md={6}>
+                        <FloatingInput error={data.companyWebsiteAddress.touched && !data.companyWebsiteAddress.valid ? 'inValid' : ''} name="companyWebsiteAddress" onChange={onChangeHandler} value={data.companyWebsiteAddress.value} type='name' label='Company Website Address' placeholder='Company Website Address' id="CompanyWebsiteAddress" for="floatingInput" />
+                    </Col>
+                </Row>
+                <Row>
+                    <Col md={6}>
+                        <SelectField name="industryCategory" id="industryCategory" value={data.industryCategory.value} onChange={onChangeHandler} options={industryOptions} label='Industry Category' />
+                    </Col>
+                </Row>
+                <Row>
+                    <Col className='backgroundGrey m-3'>
+                        Primary Contact
+                    </Col>
+                </Row>
+                <Row>
+                    <Col md={6}>
+                        <FloatingInput error={data.firstName.touched && !data.firstName.valid ? 'inValid' : ''} name="firstName" onChange={onChangeHandler} value={data.firstName.value} type='name' label='First Name' placeholder='First Name' id="firstName" for="floatingInput" />
+                    </Col>
+                    <Col md={6}>
+                        <FloatingInput error={data.lastName.touched && !data.lastName.valid ? 'inValid' : ''} name="lastName" onChange={onChangeHandler} value={data.lastName.value} type='name' label='Last Name' placeholder='Last Name' id="lastName" for="floatingInput" />
+                    </Col>
+                </Row>
+                <Row>
+                    <Col md={6}>
+                        <FloatingInput error={data.email.touched && !data.email.valid ? 'inValid' : ''} name="email" onChange={onChangeHandler} value={data.email.value} type='name' label='Email' placeholder='Email' id="Email" for="floatingInput" />
+                    </Col>
+                    <Col md={6}>
+                        <FloatingInput error={data.phone.touched && !data.phone.valid ? 'inValid' : ''} maxLength={12} name="phone" onChange={onChangeHandler} value={data.phone.value} type='name' label='Phone' placeholder='Phone' id="Phone" for="floatingInput" />
+                    </Col>
+                </Row>
+                <Row>
+                    <Col className='backgroundGrey mb-3 mx-3'>
+                        <input name="secondaryContactCheck" id='secondaryContactCheck' className="secondaryContactCheck" onChange={onChangeHandler} checked={advertiserData.secondaryContactCheck} type='checkbox' />
                     Secondary Contact (Billing - Option)
                     </Col>
-            </Row>
-            {secondaryContactForm}
-            <Row>
-                <Col className='backgroundGrey mx-3 mb-3'>
-                    Business Address
+                </Row>
+                {secondaryContactForm}
+                <Row>
+                    <Col className='backgroundGrey mx-3 mb-3'>
+                        Business Address
                     </Col>
-            </Row>
-            <Row>
-                <Col md={6}>
-                    <FloatingInput error={data.address.touched && !data.address.valid ? 'inValid' : ''} name="address" onChange={onChangeHandler} value={data.address.value} type='address' label='Address' placeholder='Address' id="address" for="floatingInput" />
-                </Col>
-                <Col md={6}>
-                    <FloatingInput error={data.addressLine2.touched && !data.addressLine2.valid ? 'inValid' : ''} name="addressLine2" onChange={onChangeHandler} value={data.addressLine2.value} type='address' label='AddressLine2' placeholder='AddressLine2' id="addressLine2" for="floatingInput" />
-                </Col>
-            </Row>
-            <Row>
-                <Col md={6}>
-                    <FloatingInput error={data.city.touched && !data.city.valid ? 'inValid' : ''} name="city" onChange={onChangeHandler} value={data.city.value} type='name' label='City' placeholder='City' id="city" for="floatingInput" />
-                </Col>
-                <Col md={6}>
-                    <SelectField name="country" id="country" onChange={onChangeHandler} value={data.country.value} options={countriesOption} label="Country" />
-                    {/* <FloatingInput error={data.country.touched && !data.country.valid ? 'inValid' : ''} name="country" onChange={onChangeHandler} value={data.country.value} type='name' label='Country' placeholder='Country' id="country" for="floatingInput" /> */}
-                </Col>
-            </Row>
-            <Row>
-                <Col md={6}>
-                    <SelectField disabled={!advertiserData.isCountry} name="state" id="state" onChange={onChangeHandler} value={data.state.value} options={stateOptions} label="State" />
-                </Col>
-                <Col md={6}>
-                    <FloatingInput disabled={!advertiserData.isCountry} error={data.postal.touched && !data.postal.valid ? 'inValid' : ''} name="postal" onChange={onChangeHandler} value={data.postal.value} type='name' label='Postal' placeholder='Postal' id="postal" for="floatingInput" />
-                </Col>
-            </Row>
-            <Row>
-                <Col className='backgroundGrey mx-3'>
-                    <input name="secondaryBillingAddressCheck" className="secondaryContactCheck" onChange={onChangeHandler} checked={advertiserData.secondaryBillingAddressCheck} type='checkbox' />
+                </Row>
+                <Row>
+                    <Col md={6}>
+                        <FloatingInput error={data.address.touched && !data.address.valid ? 'inValid' : ''} name="address" onChange={onChangeHandler} value={data.address.value} type='address' label='Address' placeholder='Address' id="address" for="floatingInput" />
+                    </Col>
+                    <Col md={6}>
+                        <FloatingInput error={data.addressLine2.touched && !data.addressLine2.valid ? 'inValid' : ''} name="addressLine2" onChange={onChangeHandler} value={data.addressLine2.value} type='address' label='AddressLine2' placeholder='AddressLine2' id="addressLine2" for="floatingInput" />
+                    </Col>
+                </Row>
+                <Row>
+                    <Col md={6}>
+                        <FloatingInput error={data.city.touched && !data.city.valid ? 'inValid' : ''} name="city" onChange={onChangeHandler} value={data.city.value} type='name' label='City' placeholder='City' id="city" for="floatingInput" />
+                    </Col>
+                    <Col md={6}>
+                        <SelectField name="country" id="country" onChange={onChangeHandler} value={data.country.value} options={countriesOption} label="Country" />
+                        {/* <FloatingInput error={data.country.touched && !data.country.valid ? 'inValid' : ''} name="country" onChange={onChangeHandler} value={data.country.value} type='name' label='Country' placeholder='Country' id="country" for="floatingInput" /> */}
+                    </Col>
+                </Row>
+                <Row>
+                    <Col md={6}>
+                        <SelectField disabled={!advertiserData.isCountry} name="state" id="state" onChange={onChangeHandler} value={data.state.value} options={stateOptions} label="State" />
+                    </Col>
+                    <Col md={6}>
+                        <FloatingInput disabled={!advertiserData.isCountry} error={data.postal.touched && !data.postal.valid ? 'inValid' : ''} name="postal" onChange={onChangeHandler} value={data.postal.value} type='name' label='Postal' placeholder='Postal' id="postal" for="floatingInput" />
+                    </Col>
+                </Row>
+                <Row>
+                    <Col className='backgroundGrey mx-3'>
+                        <input name="secondaryBillingAddressCheck" className="secondaryContactCheck" onChange={onChangeHandler} checked={advertiserData.secondaryBillingAddressCheck} type='checkbox' />
                     Bulling Address (Optional)
                     </Col>
-            </Row>
-            {secondaryBillingForm}
-            <Row>
-                <Col>
-                    <Button disabled={advertiserData.validated} className='addAdvertiserButton' color="primary" onClick={createAdvertiserHandler}>
-                        Create Advertiser<i className='fa fa-angle-double-right pl-1' aria-hidden="true"></i></Button>
-                    <Button className='addAdvertiserCancelButton'>Cancel</Button>
-                </Col>
-            </Row>
+                </Row>
+                {secondaryBillingForm}
+                <Row>
+                    <Col>
+                        <Button disabled={advertiserData.validated} className='addAdvertiserButton' color="primary" onClick={createAdvertiserHandler}>
+                            Create Advertiser<i className='fa fa-angle-double-right pl-1' aria-hidden="true"></i></Button>
+                        <Button className='addAdvertiserCancelButton'>Cancel</Button>
+                    </Col>
+                </Row>
 
-        </div>
+            </div>
+        </>
     )
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        setClientResponseData : (data) => dispatch(actions.setClientFormResponse(data))
+        setClientResponseData: (data) => dispatch(actions.setClientFormResponse(data))
     }
 }
 
-export default connect(null,mapDispatchToProps)(AddNewAdvertiser)
+export default connect(null, mapDispatchToProps)(AddNewAdvertiser)
