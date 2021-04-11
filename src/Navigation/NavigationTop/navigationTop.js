@@ -46,7 +46,7 @@ function NavigationTop(props) {
                             </DropdownItem>
                             <DropdownItem>
                                 <NavItem>
-                                    <NavLink className='nav-link' activeClassName='active' to='/'>
+                                    <NavLink className='nav-link' activeClassName='active' to='/signOut'>
                                     <i class="fa fa-sign-out mr-2"></i>SignOut</NavLink>
                                 </NavItem> 
                             </DropdownItem>

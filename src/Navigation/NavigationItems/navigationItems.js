@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './navigationItems.css';
 import NavigationTop from '../NavigationTop/navigationTop';
-import { NavLink, Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { Collapse, Navbar, NavbarToggler, Nav, NavItem, DropdownItem, DropdownMenu, UncontrolledDropdown, DropdownToggle } from 'reactstrap';
 
 const NavigationItems = (props) => {
@@ -11,16 +11,6 @@ const NavigationItems = (props) => {
     return (
         <div>
             <NavigationTop />
-
-            {/* <ul className="nav nav-tabs bg-primary">
-                <li>
-                <NavigationItem link='/dashboard'>Dashboard</NavigationItem></li>
-                <li> <NavigationItem link='/campaigns'>Campaigns</NavigationItem></li>
-                <li> <NavigationItem link='/advertiser'>Advertiser</NavigationItem></li>
-                <div style={{ position: 'absolute', top: '0%', right: '0%' }}>
-                <li>  <NavigationItem link='/order'>+Order</NavigationItem></li>
-                </div>
-            </ul> */}
 
             <div>
                 <Navbar className="bottomNavigationbar" light expand="md">

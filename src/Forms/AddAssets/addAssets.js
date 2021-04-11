@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import './addAssets.css';
 import { Button, Table, Row, Col } from 'reactstrap';
 import Dropzone from '../../FormElement/Dropzone/dropzone';
-import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { getPersonById } from '../../Api/Api';
 
@@ -15,10 +14,6 @@ function AddAssets({ previous, assets, setAssets }) {
     useEffect(() => {
         if (data.advertiserAssets.value !== null) {
 
-
-            // const headers = {
-            //     'x-token': localStorage.getItem('token')
-            // }
             data.advertiserAssets.value.forEach((file) => {
                 getPersonById(file.uploadedBy)
                     .then(res => {
@@ -27,27 +22,10 @@ function AddAssets({ previous, assets, setAssets }) {
                     })
                     .catch(err => alert(err.message))
 
-
-                //     axios.get(`http://localhost:3000/api/person/get/${file.uploadedBy}?`, { headers: headers })
-                //         .then(res => {
-                //             let tempPersonName = res.data.data.person.firstName + ' ' + res.data.data.person.lastName
-                //             setPersonName({ ...personName, [file.uploadedBy]: tempPersonName })
-                //         })
-                //         .catch(res => console.log(res))
             })
 
         }
     }, [data.advertiserAssets.value])
-
-    // useEffect(() => {
-    //     let tempvalidation = { ...validation }
-    //     let valid = true
-    //     for (let field in validation) {
-    //         valid = valid && tempvalidation[field].valid
-    //     }
-    //     setIsFormValid(valid)
-    // }, [validation])
-
 
     const submitEventHandler = () => {
         console.log(assets)
@@ -95,12 +73,6 @@ function AddAssets({ previous, assets, setAssets }) {
                         <th>Download</th>
                     </tr>
                 </thead>
-                {/* <Row>
-                <Col md={4}>File Name</Col>
-                <Col md={3}>File Uploaded By</Col>
-                <Col md={3}>File Uploaded Date</Col>
-                <Col md={2}>Download</Col>
-            </Row> */}
                 <tbody>
                     {
                         data.advertiserAssets.value !== null && data.advertiserAssets.value.map(file => {
@@ -114,7 +86,7 @@ function AddAssets({ previous, assets, setAssets }) {
                                 <td md={4}>{file.assetOrignalName}</td>
                                 <td md={3}>{personName[file.uploadedBy]}</td>
                                 <td md={3}>{fromDate.getDate() + '-' + monthNames[fromDate.getMonth()] + '-' + fromDate.getFullYear()}</td>
-                                <td md={2}><Link to={file.assetUrl} target="_blank" download={file.assetOrignalName} rel="noopener noreferrer" style={{ color: 'red' }}>Download</Link></td>
+                                <td md={2}><Button onClick={() => window.open(file.assetUrl,'_blank')}>Download</Button></td>
                             </tr>
                         })
                     }

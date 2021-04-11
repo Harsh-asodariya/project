@@ -1,91 +1,30 @@
 export const COLUMNS = [
   {
     Header: 'Id',
-    // Footer: 'Id',
-    accessor: 'clientCampaignNumber',
-    disableFilters: true,
-    sticky: 'left'
+    accessor: 'id',
   },
   {
     Header: 'Title/Details',
-    // Footer: 'First Name',
     accessor: 'title',
-    sticky: 'left'
   },
   {
     Header: 'Advertiser',
-    // Footer: 'Last Name',
-    accessor: 'id',
-    sticky: 'left'
+    accessor: 'advertiser',
   },
   {
     Header: 'Action Required By',
-    // Footer: 'Date of Birth',
-    accessor: 'date_of_birth',
+    accessor: 'actionRequiredBy',
   },
   {
     Header: 'Next Action Due By',
-    // Footer: 'Country',
-    accessor: 'country'
-  },
-  {
-    Header: 'Progress',
-    // Footer: 'Phone',
-    accessor: 'phone'
+    accessor: 'nextActionDueBy'
   },
   {
     Header: 'Start',
-    // Footer: 'Email',
-    accessor: 'startDate'
+    accessor: 'start'
   },
   {
     Header: 'Finish',
-    // Footer: 'Age',
-    accessor: 'endDate'
+    accessor: 'end'
   },
 ]
-
-// export const GROUPED_COLUMNS = [
-//   {
-//     Header: 'Id',
-//     Footer: 'Id',
-//     accessor: 'id'
-//   },
-//   {
-//     Header: 'Name',
-//     Footer: 'Name',
-//     columns: [
-//       {
-//         Header: 'First Name',
-//         Footer: 'First Name',
-//         accessor: 'first_name'
-//       },
-//       {
-//         Header: 'Last Name',
-//         Footer: 'Last Name',
-//         accessor: 'last_name'
-//       }
-//     ]
-//   },
-//   {
-//     Header: 'Info',
-//     Footer: 'Info',
-//     columns: [
-//       {
-//         Header: 'Date of Birth',
-//         Footer: 'Date of Birth',
-//         accessor: 'date_of_birth'
-//       },
-//       {
-//         Header: 'Country',
-//         Footer: 'Country',
-//         accessor: 'country'
-//       },
-//       {
-//         Header: 'Phone',
-//         Footer: 'Phone',
-//         accessor: 'phone'
-//       }
-//     ]
-//   }
-// ]

@@ -15,7 +15,7 @@ const getConfig = (isTextPlainData) => {
 
     if (isTextPlainData) {
         return {
-            'Content-Type': 'text/plain',
+            'Content-Type': 'multipart/formdata',
             'x-token': getToken()
         }
     }

@@ -4,7 +4,6 @@ import './addNewAdvertiser.css';
 import FloatingInput from '../../FormElement/FloatingInput/floatingInput';
 import SelectField from '../../FormElement/Select/select';
 import { validationHandler } from '../../Shared/Validation/validation';
-import axios from 'axios';
 import * as actions from '../../Store/Actions/formResponse';
 import { connect } from 'react-redux';
 import { createClient, getCountries, getIndustries, getStates } from '../../Api/Api';
@@ -17,7 +16,6 @@ function AddNewAdvertiser({ next, advertiserData, setAdvertiserData, setClientRe
 
     const [countriesOption, setCountriesOption] = useState()
     const [stateOptions, setStateOption] = useState()
-    // const [secCountriesOption, setSecCountriesOption] = useState()
     const [secStateOptions, setSecStateOption] = useState()
     const [industryOptions, setIndustryOptions] = useState()
 
@@ -36,83 +34,70 @@ function AddNewAdvertiser({ next, advertiserData, setAdvertiserData, setClientRe
     }
 
     const createAdvertiserHandler = () => {
-        // let business = {
-        //     "address": data.address.value,
-        //     "address2": data.addressLine2.value,
-        //     "city": data.city.value,
-        //     "postal": data.postal.value,
-        //     "country": data.country.value.value,
-        //     "state": data.state.value.value,
-        //     "provinceID": 2
-        // }
-        // let billing
-        // if(advertiserData.secondaryBillingAddressCheck){
-        //     billing = {
-        //         "address": secondaryBilling.address.value,
-        //         "address2": secondaryBilling.addressLine2.value,
-        //         "city": secondaryBilling.city.value,
-        //         "state": secondaryBilling.state.value.value,
-        //         "postal": secondaryBilling.postal.value,
-        //         "country": secondaryBilling.country.value.value,
-        //         "provinceID": 2
-        //     }
-        // } else {
-        //     billing = business
-        // }
+        let business = {
+            "address": data.address.value,
+            "address2": data.addressLine2.value,
+            "city": data.city.value,
+            "postal": data.postal.value,
+            "country": data.country.value.value,
+            "state": data.state.value.value,
+            "provinceID": 2
+        }
+        let billing
+        if(advertiserData.secondaryBillingAddressCheck){
+            billing = {
+                "address": secondaryBilling.address.value,
+                "address2": secondaryBilling.addressLine2.value,
+                "city": secondaryBilling.city.value,
+                "state": secondaryBilling.state.value.value,
+                "postal": secondaryBilling.postal.value,
+                "country": secondaryBilling.country.value.value,
+                "provinceID": 2
+            }
+        } else {
+            billing = business
+        }
 
-        // let clientData = {
-        //     "companyName": data.companyName.value,
-        //     "industryID": data.industryCategory.value.value,
-        //     "companyWebsite": data.companyWebsiteAddress.value,
-        //     "companyType": "Client",
-        //     "contactAddress": {
-        //         "business": business,
-        //         "billing": billing,
-        //         "useSame": !advertiserData.secondaryBillingAddressCheck
-        //     },
-        //     "addressType": "Billing",
-        //     "firstName": data.firstName.value,
-        //     "lastName": data.lastName.value,
-        //     "email": data.email.value,
-        //     "phone": data.phone.value,
-        //     "roleCode": "CLIENT",
-        //     "createdByPerson": localStorage.getItem('personId')
-        // }
-        // if(advertiserData.secondaryContactCheck){
-        //     let clientSecondaryContact = {
-        //         "firstName": secondaryContact.firstName.value,
-        //         "lastName": secondaryContact.lastName.value,
-        //         "email": secondaryContact.email.value,
-        //         "phone": secondaryContact.phone.value
-        //     }
-        //     clientData['secondaryContact'] = clientSecondaryContact
-        // }
+        let clientData = {
+            "companyName": data.companyName.value,
+            "industryID": data.industryCategory.value.value,
+            "companyWebsite": data.companyWebsiteAddress.value,
+            "companyType": "Client",
+            "contactAddress": {
+                "business": business,
+                "billing": billing,
+                "useSame": !advertiserData.secondaryBillingAddressCheck
+            },
+            "addressType": "Billing",
+            "firstName": data.firstName.value,
+            "lastName": data.lastName.value,
+            "email": data.email.value,
+            "phone": data.phone.value,
+            "roleCode": "CLIENT",
+            "createdByPerson": localStorage.getItem('personId')
+        }
+        if(advertiserData.secondaryContactCheck){
+            let clientSecondaryContact = {
+                "firstName": secondaryContact.firstName.value,
+                "lastName": secondaryContact.lastName.value,
+                "email": secondaryContact.email.value,
+                "phone": secondaryContact.phone.value
+            }
+            clientData['secondaryContact'] = clientSecondaryContact
+        }
 
-        // setIsLoading(true)
-        // createClient(clientData)
-        //     .then(res => {
-        // setIsLoading(false)
-            //         setClientResponseData(res)
-            //         next()
-            //     })
-            // .catch(err => {
-            //     setIsLoading(false)
-            //     alert(err.message)
-            // })
-
-
-        // const headers = {
-        //     'Content-Type': 'application/json',
-        //     'x-token': localStorage.getItem('token')
-        // }
-        // console.log(clientData)
-        // axios.post('http://localhost:3000/api/company/client',clientData,{headers:headers})
-        //     .then(res => {
-        //         setClientResponseData(res.data.data)
-        //         next()
-        //     })
-        //     .catch(error => console.log(error.response.data.errorMessage))
-        next()
+        setIsLoading(true)
+        createClient(clientData)
+            .then(res => {
+        setIsLoading(false)
+                    setClientResponseData(res)
+                    next()
+                })
+            .catch(err => {
+                setIsLoading(false)
+                alert(err)
+            })
+        // next()
     }
 
     useEffect(() => {
@@ -126,15 +111,7 @@ function AddNewAdvertiser({ next, advertiserData, setAdvertiserData, setClientRe
                     )
                 })
                 .catch(err => alert(err.message))
-            // axios.get(`http://localhost:3000/pub/states/${secondaryBilling.country.value.value}`)
-            //     .then(res => {
-            //         let states = res.data.data
-            //         setSecStateOption(states.map(state => {
-            //             return { value: state.code, label: state.name }
-            //         })
-            //         )
-            //     })
-            //     .catch(res => console.log(res))
+
         }
     }, [secondaryBilling.country.value, advertiserData.secIsCountry])
 
@@ -149,15 +126,7 @@ function AddNewAdvertiser({ next, advertiserData, setAdvertiserData, setClientRe
                     )
                 })
                 .catch(err => alert(err.message))
-            // axios.get(`http://localhost:3000/pub/states/${data.country.value.value}`)
-            //     .then(res => {
-            //         let states = res.data.data
-            //         setStateOption(states.map(state => {
-            //             return { value: state.code, label: state.name }
-            //         })
-            //         )
-            //     })
-            //     .catch(res => console.log(res))
+        
         }
     }, [data.country.value, advertiserData.isCountry])
 
@@ -180,19 +149,7 @@ function AddNewAdvertiser({ next, advertiserData, setAdvertiserData, setClientRe
                 )
             })
             .catch(err => alert(err.message))
-        // const headers = {
-        //     // 'Content-Type': 'application/json',
-        //     'x-token': localStorage.getItem('token')
-        // }
-        // axios.get('http://localhost:3000/api/wholesalepricing/getIndustries', { headers: headers })
-        //     .then(res => {
-        //         let industries = res.data.data
-        //         setIndustryOptions(industries.map(industry => {
-        //             return { value: industry.id, label: industry.name }
-        //         })
-        //         )
-        //     })
-        //     .catch(res => console.log(res))
+        
     }, [])
 
     const submitButtonHandler = (data1, data2, data3) => {
@@ -289,7 +246,6 @@ function AddNewAdvertiser({ next, advertiserData, setAdvertiserData, setClientRe
         if (name) {
             let tempdata
             if (name === 'country') {
-                // document.getElementById('state').clearValue()
                 let isValid = validationHandler(name, event.value)
                 tempdata = { ...secondaryBilling, [name]: { value: event, touched: true, valid: isValid }, 'state': { value: null, touched: false, valid: false }, 'postal': { value: '', touched: false, valid: false } }
                 let validated = submitButtonHandler(tempdata, data)
@@ -320,18 +276,18 @@ function AddNewAdvertiser({ next, advertiserData, setAdvertiserData, setClientRe
         secondaryContactForm = <>
             <Row>
                 <Col md={6}>
-                    <FloatingInput error={secondaryContact.firstName.touched && !secondaryContact.firstName.valid ? 'inValid' : ''} name="firstName" onChange={onSecondaryContactChangeHandler} value={secondaryContact.firstName.value} type='name' label='First Name' placeholder='First Name' id="firstName" for="floatingInput" />
+                    <FloatingInput errrMessage='Please Enter Valid First Name' error={secondaryContact.firstName.touched && !secondaryContact.firstName.valid ? 'inValid' : ''} name="firstName" onChange={onSecondaryContactChangeHandler} value={secondaryContact.firstName.value} type='name' label='First Name' placeholder='First Name' id="firstName" for="floatingInput" />
                 </Col>
                 <Col md={6}>
-                    <FloatingInput error={secondaryContact.lastName.touched && !secondaryContact.lastName.valid ? 'inValid' : ''} name="lastName" onChange={onSecondaryContactChangeHandler} value={secondaryContact.lastName.value} type='name' label='Last Name' placeholder='Last Name' id="lastName" for="floatingInput" />
+                    <FloatingInput errrMessage='Please Enter Valid Last Name' error={secondaryContact.lastName.touched && !secondaryContact.lastName.valid ? 'inValid' : ''} name="lastName" onChange={onSecondaryContactChangeHandler} value={secondaryContact.lastName.value} type='name' label='Last Name' placeholder='Last Name' id="lastName" for="floatingInput" />
                 </Col>
             </Row>
             <Row>
                 <Col md={6}>
-                    <FloatingInput error={secondaryContact.email.touched && !secondaryContact.email.valid ? 'inValid' : ''} name="email" onChange={onSecondaryContactChangeHandler} value={secondaryContact.email.value} type='name' label='Email' placeholder='Email' id="Email" for="floatingInput" />
+                    <FloatingInput errrMessage='Please Enter Valid Email' error={secondaryContact.email.touched && !secondaryContact.email.valid ? 'inValid' : ''} name="email" onChange={onSecondaryContactChangeHandler} value={secondaryContact.email.value} type='name' label='Email' placeholder='Email' id="Email" for="floatingInput" />
                 </Col>
                 <Col md={6}>
-                    <FloatingInput maxLength={12} error={secondaryContact.phone.touched && !secondaryContact.phone.valid ? 'inValid' : ''} name="phone" onChange={onSecondaryContactChangeHandler} value={secondaryContact.phone.value} type='name' label='Phone' placeholder='Phone' id="Phone" for="floatingInput" />
+                    <FloatingInput errrMessage='Please Enter Valid Phone' maxLength={12} error={secondaryContact.phone.touched && !secondaryContact.phone.valid ? 'inValid' : ''} name="phone" onChange={onSecondaryContactChangeHandler} value={secondaryContact.phone.value} type='name' label='Phone' placeholder='Phone' id="Phone" for="floatingInput" />
                 </Col>
             </Row>
         </>
@@ -343,15 +299,15 @@ function AddNewAdvertiser({ next, advertiserData, setAdvertiserData, setClientRe
         secondaryBillingForm = <>
             <Row>
                 <Col md={6}>
-                    <FloatingInput error={secondaryBilling.address.touched && !secondaryBilling.address.valid ? 'inValid' : ''} name="address" onChange={onSecondaryBillingChangeHandler} value={secondaryBilling.address.value} type='address' label='Address' placeholder='Address' id="address2" for="floatingInput" />
+                    <FloatingInput errrMessage='Please Enter Valid Address' error={secondaryBilling.address.touched && !secondaryBilling.address.valid ? 'inValid' : ''} name="address" onChange={onSecondaryBillingChangeHandler} value={secondaryBilling.address.value} type='address' label='Address' placeholder='Address' id="address2" for="floatingInput" />
                 </Col>
                 <Col md={6}>
-                    <FloatingInput error={secondaryBilling.addressLine2.touched && !secondaryBilling.addressLine2.valid ? 'inValid' : ''} name="addressLine2" onChange={onSecondaryBillingChangeHandler} value={secondaryBilling.addressLine2.value} type='address' label='AddressLine2' placeholder='AddressLine2' id="addressLine2" for="floatingInput" />
+                    <FloatingInput errrMessage='Please Enter Valid Address' error={secondaryBilling.addressLine2.touched && !secondaryBilling.addressLine2.valid ? 'inValid' : ''} name="addressLine2" onChange={onSecondaryBillingChangeHandler} value={secondaryBilling.addressLine2.value} type='address' label='AddressLine2' placeholder='AddressLine2' id="addressLine2" for="floatingInput" />
                 </Col>
             </Row>
             <Row>
                 <Col md={6}>
-                    <FloatingInput error={secondaryBilling.city.touched && !secondaryBilling.city.valid ? 'inValid' : ''} name="city" onChange={onSecondaryBillingChangeHandler} value={secondaryBilling.city.value} type='name' label='City' placeholder='City' id="city2" for="floatingInput" />
+                    <FloatingInput errrMessage='Please Enter Valid City' error={secondaryBilling.city.touched && !secondaryBilling.city.valid ? 'inValid' : ''} name="city" onChange={onSecondaryBillingChangeHandler} value={secondaryBilling.city.value} type='name' label='City' placeholder='City' id="city2" for="floatingInput" />
                 </Col>
                 <Col md={6}>
                     <SelectField name="country" id="country2" onChange={onSecondaryBillingChangeHandler} value={secondaryBilling.country.value} options={countriesOption} label="Country" />
@@ -363,7 +319,7 @@ function AddNewAdvertiser({ next, advertiserData, setAdvertiserData, setClientRe
                     <SelectField disabled={!advertiserData.secIsCountry} name="state" id="state2" onChange={onSecondaryBillingChangeHandler} value={secondaryBilling.state.value} options={secStateOptions} label="State" />
                 </Col>
                 <Col md={6}>
-                    <FloatingInput disabled={!advertiserData.secIsCountry} error={secondaryBilling.postal.touched && !secondaryBilling.postal.valid ? 'inValid' : ''} name="postal" onChange={onSecondaryBillingChangeHandler} value={secondaryBilling.postal.value} type='name' label='Postal' placeholder='Postal' id="postal" for="floatingInput" />
+                    <FloatingInput errrMessage='Please Enter Valid Postal' disabled={!advertiserData.secIsCountry} error={secondaryBilling.postal.touched && !secondaryBilling.postal.valid ? 'inValid' : ''} name="postal" onChange={onSecondaryBillingChangeHandler} value={secondaryBilling.postal.value} type='name' label='Postal' placeholder='Postal' id="postal" for="floatingInput" />
                 </Col>
             </Row>
         </>
@@ -375,10 +331,10 @@ function AddNewAdvertiser({ next, advertiserData, setAdvertiserData, setClientRe
             <div className='addNewAdvertiser'>
                 <Row>
                     <Col md={6}>
-                        <FloatingInput name="companyName" error={data.companyName.touched && !data.companyName.valid ? 'inValid' : ''} onChange={onChangeHandler} value={data.companyName.value} type='name' label='Company Name' placeholder='Company Name' id="CompanyName" for="floatingInput" />
+                        <FloatingInput errrMessage='Please Enter Valid Company Name' name="companyName" error={data.companyName.touched && !data.companyName.valid ? 'inValid' : ''} onChange={onChangeHandler} value={data.companyName.value} type='name' label='Company Name' placeholder='Company Name' id="CompanyName" for="floatingInput" />
                     </Col>
                     <Col md={6}>
-                        <FloatingInput error={data.companyWebsiteAddress.touched && !data.companyWebsiteAddress.valid ? 'inValid' : ''} name="companyWebsiteAddress" onChange={onChangeHandler} value={data.companyWebsiteAddress.value} type='name' label='Company Website Address' placeholder='Company Website Address' id="CompanyWebsiteAddress" for="floatingInput" />
+                        <FloatingInput errrMessage='Please Enter Valid Company Website Address' error={data.companyWebsiteAddress.touched && !data.companyWebsiteAddress.valid ? 'inValid' : ''} name="companyWebsiteAddress" onChange={onChangeHandler} value={data.companyWebsiteAddress.value} type='name' label='Company Website Address' placeholder='Company Website Address' id="CompanyWebsiteAddress" for="floatingInput" />
                     </Col>
                 </Row>
                 <Row>
@@ -393,18 +349,18 @@ function AddNewAdvertiser({ next, advertiserData, setAdvertiserData, setClientRe
                 </Row>
                 <Row>
                     <Col md={6}>
-                        <FloatingInput error={data.firstName.touched && !data.firstName.valid ? 'inValid' : ''} name="firstName" onChange={onChangeHandler} value={data.firstName.value} type='name' label='First Name' placeholder='First Name' id="firstName" for="floatingInput" />
+                        <FloatingInput errrMessage='Please Enter Valid First Name' error={data.firstName.touched && !data.firstName.valid ? 'inValid' : ''} name="firstName" onChange={onChangeHandler} value={data.firstName.value} type='name' label='First Name' placeholder='First Name' id="firstName" for="floatingInput" />
                     </Col>
                     <Col md={6}>
-                        <FloatingInput error={data.lastName.touched && !data.lastName.valid ? 'inValid' : ''} name="lastName" onChange={onChangeHandler} value={data.lastName.value} type='name' label='Last Name' placeholder='Last Name' id="lastName" for="floatingInput" />
+                        <FloatingInput errrMessage='Please Enter Valid Last Name' error={data.lastName.touched && !data.lastName.valid ? 'inValid' : ''} name="lastName" onChange={onChangeHandler} value={data.lastName.value} type='name' label='Last Name' placeholder='Last Name' id="lastName" for="floatingInput" />
                     </Col>
                 </Row>
                 <Row>
                     <Col md={6}>
-                        <FloatingInput error={data.email.touched && !data.email.valid ? 'inValid' : ''} name="email" onChange={onChangeHandler} value={data.email.value} type='name' label='Email' placeholder='Email' id="Email" for="floatingInput" />
+                        <FloatingInput errrMessage='Please Enter Valid Email' error={data.email.touched && !data.email.valid ? 'inValid' : ''} name="email" onChange={onChangeHandler} value={data.email.value} type='name' label='Email' placeholder='Email' id="Email" for="floatingInput" />
                     </Col>
                     <Col md={6}>
-                        <FloatingInput error={data.phone.touched && !data.phone.valid ? 'inValid' : ''} maxLength={12} name="phone" onChange={onChangeHandler} value={data.phone.value} type='name' label='Phone' placeholder='Phone' id="Phone" for="floatingInput" />
+                        <FloatingInput errrMessage='Please Enter Valid Phone' error={data.phone.touched && !data.phone.valid ? 'inValid' : ''} maxLength={12} name="phone" onChange={onChangeHandler} value={data.phone.value} type='name' label='Phone' placeholder='Phone' id="Phone" for="floatingInput" />
                     </Col>
                 </Row>
                 <Row>
@@ -421,19 +377,18 @@ function AddNewAdvertiser({ next, advertiserData, setAdvertiserData, setClientRe
                 </Row>
                 <Row>
                     <Col md={6}>
-                        <FloatingInput error={data.address.touched && !data.address.valid ? 'inValid' : ''} name="address" onChange={onChangeHandler} value={data.address.value} type='address' label='Address' placeholder='Address' id="address" for="floatingInput" />
+                        <FloatingInput errrMessage='Please Enter Valid Address' error={data.address.touched && !data.address.valid ? 'inValid' : ''} name="address" onChange={onChangeHandler} value={data.address.value} type='address' label='Address' placeholder='Address' id="address" for="floatingInput" />
                     </Col>
                     <Col md={6}>
-                        <FloatingInput error={data.addressLine2.touched && !data.addressLine2.valid ? 'inValid' : ''} name="addressLine2" onChange={onChangeHandler} value={data.addressLine2.value} type='address' label='AddressLine2' placeholder='AddressLine2' id="addressLine2" for="floatingInput" />
+                        <FloatingInput errrMessage='Please Enter Valid Address' error={data.addressLine2.touched && !data.addressLine2.valid ? 'inValid' : ''} name="addressLine2" onChange={onChangeHandler} value={data.addressLine2.value} type='address' label='AddressLine2' placeholder='AddressLine2' id="addressLine2" for="floatingInput" />
                     </Col>
                 </Row>
                 <Row>
                     <Col md={6}>
-                        <FloatingInput error={data.city.touched && !data.city.valid ? 'inValid' : ''} name="city" onChange={onChangeHandler} value={data.city.value} type='name' label='City' placeholder='City' id="city" for="floatingInput" />
+                        <FloatingInput errrMessage='Please Enter Valid City' error={data.city.touched && !data.city.valid ? 'inValid' : ''} name="city" onChange={onChangeHandler} value={data.city.value} type='name' label='City' placeholder='City' id="city" for="floatingInput" />
                     </Col>
                     <Col md={6}>
                         <SelectField name="country" id="country" onChange={onChangeHandler} value={data.country.value} options={countriesOption} label="Country" />
-                        {/* <FloatingInput error={data.country.touched && !data.country.valid ? 'inValid' : ''} name="country" onChange={onChangeHandler} value={data.country.value} type='name' label='Country' placeholder='Country' id="country" for="floatingInput" /> */}
                     </Col>
                 </Row>
                 <Row>
@@ -441,7 +396,7 @@ function AddNewAdvertiser({ next, advertiserData, setAdvertiserData, setClientRe
                         <SelectField disabled={!advertiserData.isCountry} name="state" id="state" onChange={onChangeHandler} value={data.state.value} options={stateOptions} label="State" />
                     </Col>
                     <Col md={6}>
-                        <FloatingInput disabled={!advertiserData.isCountry} error={data.postal.touched && !data.postal.valid ? 'inValid' : ''} name="postal" onChange={onChangeHandler} value={data.postal.value} type='name' label='Postal' placeholder='Postal' id="postal" for="floatingInput" />
+                        <FloatingInput errrMessage='Please Enter Valid Postal' disabled={!advertiserData.isCountry} error={data.postal.touched && !data.postal.valid ? 'inValid' : ''} name="postal" onChange={onChangeHandler} value={data.postal.value} type='name' label='Postal' placeholder='Postal' id="postal" for="floatingInput" />
                     </Col>
                 </Row>
                 <Row>
@@ -453,7 +408,7 @@ function AddNewAdvertiser({ next, advertiserData, setAdvertiserData, setClientRe
                 {secondaryBillingForm}
                 <Row>
                     <Col>
-                        <Button disabled={advertiserData.validated} className='addAdvertiserButton' color="primary" onClick={createAdvertiserHandler}>
+                        <Button disabled={!advertiserData.validated} className='addAdvertiserButton' color="primary" onClick={createAdvertiserHandler}>
                             Create Advertiser<i className='fa fa-angle-double-right pl-1' aria-hidden="true"></i></Button>
                         <Button className='addAdvertiserCancelButton'>Cancel</Button>
                     </Col>

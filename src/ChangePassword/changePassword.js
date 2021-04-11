@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
-// import Card from '../UI/card';
 import FloatingInput from '../FormElement/FloatingInput/floatingInput';
 import './changePassword.css';
 import * as actions from '../Store/Actions/auth';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { Button } from 'reactstrap';
-import axios from 'axios';
 import NavigationItems from '../Navigation/NavigationItems/navigationItems';
 import { changePassword } from '../Api/Api';
 import BackDrop from '../Shared/Backdrop/Backdrop'; 
@@ -39,20 +37,7 @@ const ChangePassword = props => {
                 .catch(err => {
                     setIsLoading(false)
                     alert(err.message)})
-            // const headers = {
-            //     'Content-Type': 'application/json',
-            //     'x-token': props.token
-            // }
-            // axios.post('http://localhost:3000/api/person/changePassword', data, { headers: headers })
-            //     .then(res => {
-            //         if (res.data.success === true) {
-            //             alert('success')
-            //             localStorage.setItem('token', res.data.data.token)
-            //             props.passwordChangeHandler(res.data.data.token)
-            //             props.history.push('/dashboard')
-            //         }
-            //     })
-            //     .catch(res => console.log(res))
+            
         } else {
             console.log(props.token)
             alert('Password does not match')

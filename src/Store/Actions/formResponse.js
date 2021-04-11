@@ -7,3 +7,11 @@ export const setClientFormResponse = (data) => {
         data
     }
 }
+
+export const setOrderFormResponse = (data) => {
+    console.log('in setOrderFormresponse')
+    return {
+        type: actionTypes.ORDER_RESPONSE,
+        data
+    }
+}
