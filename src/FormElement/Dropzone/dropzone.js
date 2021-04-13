@@ -29,14 +29,17 @@ const Dropzone = (props) => {
     const [personName, setPersonName] = useState()
 
     const [isLoading, setIsLoading] = useState(false)
-    console.log(props.campaignId)
     let formData = new FormData()
     formData.append('type', props.fileType)
     formData.append('uploadedBy', localStorage.getItem('personId'))
-    formData.append('campaignID', props.campaignId)
+    if(props.campaignID){
+        formData.append('campaignID', props.campaignID)
+    } else {
+        formData.append('campaignID', props.order.history.campaignID)
+    }
+    
 
     const onDrop = (acceptedFiles) => {
-        console.log(formData.getAll('campaignID'))
         acceptedFiles.forEach(file => {
             formData.append('file', file)
             setIsLoading(true)
@@ -59,7 +62,6 @@ const Dropzone = (props) => {
         accept: props.accept,
         onDrop
     });
-
     let dropzone
     if (props.file && props.file.length !== 0 && props.swapDisplay && props.swapDisplay === true) {
         var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
@@ -147,7 +149,7 @@ const Dropzone = (props) => {
 
 const mapStateToProps = state => {
     return {
-        campaignId: state.response.order.history.campaignID
+        order: state.response.order
     }
 }
 

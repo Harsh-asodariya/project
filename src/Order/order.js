@@ -69,7 +69,6 @@ const Order = () => {
     validated: false
   })
 
-
   const nextHandleClick = () => {
     setCurrentStep(currentStep + 1)
   }

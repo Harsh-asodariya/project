@@ -25,7 +25,8 @@ export const PaginationTable = () => {
                         'actionRequiredBy' : row.statusWithPerson.firstName + ' ' + row.statusWithPerson.lastName,
                         'nextActionDueBy' : 'Not Selected',
                         'start' : 'Not Selected',
-                        'end' : 'Not Selected'
+                        'end' : 'Not Selected',
+                        'campaignID' : row.id,
                     }
                 }))
                 console.log(res.rows)

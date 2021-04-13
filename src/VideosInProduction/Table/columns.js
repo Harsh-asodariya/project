@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom'
+
 export const COLUMNS = [
   {
     Header: 'Id',
@@ -5,7 +7,8 @@ export const COLUMNS = [
   },
   {
     Header: 'Title/Details',
-    accessor: 'title',
+    accessor: d => d.title,
+    Cell: (e) => (<Link to={{ pathname: `/campaigndetail/${e.data[e.row.id].campaignID}`}}>{e.value}</Link>)
   },
   {
     Header: 'Advertiser',

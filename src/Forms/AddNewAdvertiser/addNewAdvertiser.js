@@ -34,70 +34,70 @@ function AddNewAdvertiser({ next, advertiserData, setAdvertiserData, setClientRe
     }
 
     const createAdvertiserHandler = () => {
-        let business = {
-            "address": data.address.value,
-            "address2": data.addressLine2.value,
-            "city": data.city.value,
-            "postal": data.postal.value,
-            "country": data.country.value.value,
-            "state": data.state.value.value,
-            "provinceID": 2
-        }
-        let billing
-        if(advertiserData.secondaryBillingAddressCheck){
-            billing = {
-                "address": secondaryBilling.address.value,
-                "address2": secondaryBilling.addressLine2.value,
-                "city": secondaryBilling.city.value,
-                "state": secondaryBilling.state.value.value,
-                "postal": secondaryBilling.postal.value,
-                "country": secondaryBilling.country.value.value,
-                "provinceID": 2
-            }
-        } else {
-            billing = business
-        }
+        // let business = {
+        //     "address": data.address.value,
+        //     "address2": data.addressLine2.value,
+        //     "city": data.city.value,
+        //     "postal": data.postal.value,
+        //     "country": data.country.value.value,
+        //     "state": data.state.value.value,
+        //     "provinceID": 2
+        // }
+        // let billing
+        // if(advertiserData.secondaryBillingAddressCheck){
+        //     billing = {
+        //         "address": secondaryBilling.address.value,
+        //         "address2": secondaryBilling.addressLine2.value,
+        //         "city": secondaryBilling.city.value,
+        //         "state": secondaryBilling.state.value.value,
+        //         "postal": secondaryBilling.postal.value,
+        //         "country": secondaryBilling.country.value.value,
+        //         "provinceID": 2
+        //     }
+        // } else {
+        //     billing = business
+        // }
 
-        let clientData = {
-            "companyName": data.companyName.value,
-            "industryID": data.industryCategory.value.value,
-            "companyWebsite": data.companyWebsiteAddress.value,
-            "companyType": "Client",
-            "contactAddress": {
-                "business": business,
-                "billing": billing,
-                "useSame": !advertiserData.secondaryBillingAddressCheck
-            },
-            "addressType": "Billing",
-            "firstName": data.firstName.value,
-            "lastName": data.lastName.value,
-            "email": data.email.value,
-            "phone": data.phone.value,
-            "roleCode": "CLIENT",
-            "createdByPerson": localStorage.getItem('personId')
-        }
-        if(advertiserData.secondaryContactCheck){
-            let clientSecondaryContact = {
-                "firstName": secondaryContact.firstName.value,
-                "lastName": secondaryContact.lastName.value,
-                "email": secondaryContact.email.value,
-                "phone": secondaryContact.phone.value
-            }
-            clientData['secondaryContact'] = clientSecondaryContact
-        }
+        // let clientData = {
+        //     "companyName": data.companyName.value,
+        //     "industryID": data.industryCategory.value.value,
+        //     "companyWebsite": data.companyWebsiteAddress.value,
+        //     "companyType": "Client",
+        //     "contactAddress": {
+        //         "business": business,
+        //         "billing": billing,
+        //         "useSame": !advertiserData.secondaryBillingAddressCheck
+        //     },
+        //     "addressType": "Billing",
+        //     "firstName": data.firstName.value,
+        //     "lastName": data.lastName.value,
+        //     "email": data.email.value,
+        //     "phone": data.phone.value,
+        //     "roleCode": "CLIENT",
+        //     "createdByPerson": localStorage.getItem('personId')
+        // }
+        // if(advertiserData.secondaryContactCheck){
+        //     let clientSecondaryContact = {
+        //         "firstName": secondaryContact.firstName.value,
+        //         "lastName": secondaryContact.lastName.value,
+        //         "email": secondaryContact.email.value,
+        //         "phone": secondaryContact.phone.value
+        //     }
+        //     clientData['secondaryContact'] = clientSecondaryContact
+        // }
 
-        setIsLoading(true)
-        createClient(clientData)
-            .then(res => {
-        setIsLoading(false)
-                    setClientResponseData(res)
-                    next()
-                })
-            .catch(err => {
-                setIsLoading(false)
-                alert(err)
-            })
-        // next()
+        // setIsLoading(true)
+        // createClient(clientData)
+        //     .then(res => {
+        // setIsLoading(false)
+        //             setClientResponseData(res)
+        //             next()
+        //         })
+        //     .catch(err => {
+        //         setIsLoading(false)
+        //         alert(err)
+        //     })
+        next()
     }
 
     useEffect(() => {
@@ -408,7 +408,7 @@ function AddNewAdvertiser({ next, advertiserData, setAdvertiserData, setClientRe
                 {secondaryBillingForm}
                 <Row>
                     <Col>
-                        <Button disabled={!advertiserData.validated} className='addAdvertiserButton' color="primary" onClick={createAdvertiserHandler}>
+                        <Button disabled={advertiserData.validated} className='addAdvertiserButton' color="primary" onClick={createAdvertiserHandler}>
                             Create Advertiser<i className='fa fa-angle-double-right pl-1' aria-hidden="true"></i></Button>
                         <Button className='addAdvertiserCancelButton'>Cancel</Button>
                     </Col>

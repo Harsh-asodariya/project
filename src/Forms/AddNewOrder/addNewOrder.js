@@ -74,32 +74,33 @@ function AddNewOrder({ next, previous, orderData, setOrderData, client, setOrder
     }
 
     const createOrder = () => {
-        let campaignData = {
-            "clientCompanyID": data.advertiser.value.value,
-            "title": data.title.value,
-            "description": data.description.value,
-            "landingpageURL": data.prefferedLandingPageUrl.value,
-            "targetMarket": data.targetMarket.value.value,
-            "distributionBudget": data.budget.value,
-            "startDate": new Date(),
-            "price": data.price.value,
-            "soaID": client.salesOrgCompany.soaID,
-            "sosID": client.salesOrgCompany.sosID,
-            "salesOrgCompanyID": client.salesOrgCompany.parentSalesOrgCompanyID,
-            "statusByPersonID": client.person.createdByPerson,
-            "statusWithPersonID": client.salesOrgCompany.clientPersonID
-        }
-        setIsLoading(true)
-        createCampaign(campaignData)
-            .then(res => {
-            setIsLoading(false)
-                setOrderResponseData(res)
-                console.log(res.data)
-                next()
-            })
-            .catch(err => {
-        setIsLoading(false)    
-        alert(err)})
+        // let campaignData = {
+        //     "clientCompanyID": data.advertiser.value.value,
+        //     "title": data.title.value,
+        //     "description": data.description.value,
+        //     "landingpageURL": data.prefferedLandingPageUrl.value,
+        //     "targetMarket": data.targetMarket.value.value,
+        //     "distributionBudget": data.budget.value,
+        //     "startDate": new Date(),
+        //     "price": data.price.value,
+        //     "soaID": client.salesOrgCompany.soaID,
+        //     "sosID": client.salesOrgCompany.sosID,
+        //     "salesOrgCompanyID": client.salesOrgCompany.parentSalesOrgCompanyID,
+        //     "statusByPersonID": client.person.createdByPerson,
+        //     "statusWithPersonID": client.salesOrgCompany.clientPersonID
+        // }
+        // setIsLoading(true)
+        // createCampaign(campaignData)
+        //     .then(res => {
+        //     setIsLoading(false)
+        //         setOrderResponseData(res)
+        //         console.log(res.data)
+        //         next()
+        //     })
+        //     .catch(err => {
+        // setIsLoading(false)    
+        // alert(err)})
+        next()
 
     }
 

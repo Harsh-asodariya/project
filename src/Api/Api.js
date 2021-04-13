@@ -25,3 +25,6 @@ export const createCampaign = (data) => network.post('/api/campaign/',data)
 
 // getAllCampaign
 export const getAllCampaign = () => network.post('/api/campaign/getAllcampaigns/')
+
+// campaignDetailByID
+export const getCampaignByID = (id) => network.get(`/api/campaign/${id}`)
