@@ -5,7 +5,7 @@ import './navigationTop.css';
 import bell from '../../Assets/Images/bell-solid.svg';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-import * as actions from '../../Store/Actions/auth';
+import * as actionTypes from '../../Store/Actions/actionTypes';
 
 function NavigationTop(props) {
     const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -18,36 +18,36 @@ function NavigationTop(props) {
             </div>
             <div className='circleButtonDiv'>
                 <div>
-                    <img alt='"bell' src={bell} className='bellSvg' />
+                    <img alt='"bell' src={bell} className=' bellSvg' />
                 </div>
                 <div className='butoonDropDown'>
                     <Button className='circleButton'>{props.firstName[0] + props.lastName[0]}</Button>
 
-                    <Dropdown isOpen={dropdownOpen} toggle={toggle}>
+                    <Dropdown  isOpen={dropdownOpen} toggle={toggle}>
                         <DropdownToggle
                             tag="span"
                             data-toggle="dropdown"
                             aria-expanded={dropdownOpen}
                         >
-                            <i class="fa fa-chevron-down" style={{ color: 'black' }} ></i>
+                            <i className="fa fa-chevron-down" style={{ color: 'black' }} ></i>
                         </DropdownToggle>
-                        <DropdownMenu>
+                        <DropdownMenu className='navTopDropdown'>
                             <DropdownItem>
                                 <NavItem>
                                     <NavLink className='nav-link' activeClassName='active' to="/profile">
-                                    <i class="fa fa-user mr-2" style={{color:'white'}}></i>Profile</NavLink>
+                                    <i className="fa fa-user mr-2" style={{color:'white'}}></i>Profile</NavLink>
                                 </NavItem> 
                             </DropdownItem>
                             <DropdownItem>
                                 <NavItem>
                                     <NavLink className='nav-link' activeClassName='active' to="/changePassword">
-                                    <i class="fa fa-lock mr-2"></i>Change Password</NavLink>
+                                    <i className="fa fa-lock mr-2"></i>Change Password</NavLink>
                                 </NavItem> 
                             </DropdownItem>
                             <DropdownItem>
                                 <NavItem>
-                                    <NavLink className='nav-link' activeClassName='active' to='/signOut'>
-                                    <i class="fa fa-sign-out mr-2"></i>SignOut</NavLink>
+                                    <NavLink className='nav-link' activeClassName='active' to='/login' onClick={() => props.signOut()}>
+                                    <i className="fa fa-sign-out mr-2"></i>SignOut</NavLink>
                                 </NavItem> 
                             </DropdownItem>
                         </DropdownMenu>
@@ -72,10 +72,10 @@ const mapStateToProps = (state) => {
     }
 }
 
-// const mapDispatchToProps = dispatch => {
-//     return{
-//         signOut: () => dispatch(actions)
-//     }
-// }
+const mapDispatchToProps = dispatch => {
+    return{
+        signOut: () => dispatch({type : actionTypes.SIGN_OUT})
+    }
+}
 
-export default connect(mapStateToProps)(NavigationTop)
+export default connect(mapStateToProps, mapDispatchToProps)(NavigationTop)

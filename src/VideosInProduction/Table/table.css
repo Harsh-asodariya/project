@@ -4,6 +4,11 @@ table {
     width: 100%;
 }
 
+.videosInProductionTable{
+    width: inherit;
+    overflow: auto;
+}
+
 table td,
 table th {
     border: 1px solid #ddd;
@@ -11,7 +16,6 @@ table th {
 }
 
 table th {
-    position: sticky;
     top:0;
 }
 
@@ -29,8 +33,6 @@ table tr:hover {
 
 table th,
 tfoot td {
-    /* padding-top: 12px;
-    padding-bottom: 12px; */
     text-align: center;
     background-color: white;
     color: #6c757d;
@@ -39,9 +41,13 @@ tfoot td {
 .pagination{
     display: flex;
     justify-content: space-between;
-    padding: 8px 16px;
     align-items: center;
     background-color: white;
+}
+@media(max-width : 545px){
+    .pagination{
+        flex-direction: column-reverse;
+    }
 }
 
 .paginationButton {
@@ -63,6 +69,7 @@ tfoot td {
 
 .rowPerPage{
     display: flex;
+    width:max-content;
 }
 
 .rowPerPage > li {
@@ -84,4 +91,8 @@ tfoot td {
 .active {
     background-color: #01a1dd;
     color: white;
+}
+
+.campaignDetailLink {
+    color: blue !important;
 }

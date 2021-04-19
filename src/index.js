@@ -16,8 +16,6 @@ const rootReducer = combineReducers({
   response: formResponseReducer
 })
 
-// const composeEnhancers = process.env.NODE_ENV === 'developement' ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : null || compose
-
 const composeEnhancers =
   typeof window === 'object' &&
   window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ?   
@@ -33,17 +31,12 @@ const enhancer = composeEnhancers(
 const store = createStore(rootReducer, enhancer)
 
 const app = (
-  // <React.StrictMode>
     <Provider store={store}>
       <BrowserRouter>
         <App />
       </BrowserRouter>
     </Provider>
-  // </React.StrictMode>
 )
 ReactDOM.render(app, document.getElementById('root'));
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();

@@ -29,7 +29,6 @@ export const PaginationTable = () => {
                         'campaignID' : row.id,
                     }
                 }))
-                console.log(res.rows)
             })
             .catch(err => {
                 setIsLoading(false)
@@ -62,6 +61,7 @@ export const PaginationTable = () => {
     return (
         <>
             <BackDrop show={isLoading}><Spinner /></BackDrop>
+            <div className='videosInProductionTable'>
             <table {...getTableProps()} >
                 <thead>
                     {headerGroups.map(headerGroup => (
@@ -85,8 +85,9 @@ export const PaginationTable = () => {
                     })}
                 </tbody>
             </table>
+            </div>
             <div className="pagination">
-                <div className="rowPerPage">
+                <div className="rowPerPage p-2">
                     <span className='mr-2 fs-5'>Result per page:</span>
                     <PaginationItem onClick={() => setPageSize(10)} active={pageSize === 10}>10
                     </PaginationItem>|
@@ -98,7 +99,7 @@ export const PaginationTable = () => {
 
                 </div>
 
-                <div>
+                <div className="p-2">
                     <Button className='paginationButton' onClick={() => previousPage()} disabled={!canPreviousPage}>
                         Prev
                     </Button>

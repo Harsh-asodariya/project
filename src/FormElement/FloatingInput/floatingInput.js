@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { FormFeedback, FormGroup, Input, Label } from 'reactstrap';
+import { FormFeedback, Input, Label } from 'reactstrap';
 import './floatinginput.css'
 
 class FloatingInput extends Component {

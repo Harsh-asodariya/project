@@ -1,6 +1,10 @@
 .campaignDetailBackground {
     background-color: #f2f5f9;
-    width: 100vw;
+}
+
+.campaignDetailPage{
+    max-width: 1000px;
+    margin: auto;
 }
 
 .top-section > .row > .col {
@@ -8,7 +12,10 @@
     flex-direction: column;
 }
 
-
+.advertiserAssetsTable{
+    width: inherit;
+    overflow: auto;
+}
 
 .column > .row > .col > h6 {
     color: gray;

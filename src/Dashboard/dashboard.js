@@ -1,6 +1,5 @@
 import React from 'react';
 import NavigationItems from '../Navigation/NavigationItems/navigationItems';
-// import NavigationTop from '../Navigation/navigation';
 import './dashboard.css'
 
 const Dashboard = () => {

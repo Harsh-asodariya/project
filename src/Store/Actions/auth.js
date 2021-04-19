@@ -2,7 +2,7 @@ import * as actionTypes from './actionTypes';
 
 export const loginSuccessHandler = (token, personData) => {
     localStorage.setItem('token', token)
-    localStorage.setItem('personId',personData.id)
+    localStorage.setItem('personData',JSON.stringify(personData))
     return {
         type: actionTypes.LOGIN_SUCCESS,
         token,

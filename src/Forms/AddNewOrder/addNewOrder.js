@@ -3,7 +3,6 @@ import FloatingInput from '../../FormElement/FloatingInput/floatingInput';
 import SelectField from '../../FormElement/Select/select';
 import './addNewOrder.css'
 import { Col, Row } from 'reactstrap';
-import Textarea from '../../FormElement/Textarea/textarea';
 import { Button } from 'reactstrap';
 import { validationHandler } from '../../Shared/Validation/validation';
 import { connect } from 'react-redux';
@@ -12,7 +11,7 @@ import BackDrop from '../../Shared/Backdrop/Backdrop';
 import Spinner from '../../Shared/Spinner/Spinner';
 import * as actions from '../../Store/Actions/formResponse';
 
-function AddNewOrder({ next, previous, orderData, setOrderData, client, setOrderResponseData }) {
+function AddNewOrder({ next, previous, orderData, setOrderData, client, setOrderResponseData, props }) {
 
     const [isLoading, setIsLoading] = useState()
 
@@ -21,7 +20,7 @@ function AddNewOrder({ next, previous, orderData, setOrderData, client, setOrder
     const [advertiserOption, setAdvertiserOption] = useState()
 
     useEffect(() => {
-        
+
         getMarkets()
             .then(res => {
                 let markets = res.data
@@ -31,13 +30,13 @@ function AddNewOrder({ next, previous, orderData, setOrderData, client, setOrder
                 )
             })
             .catch(err => alert(err.message))
-        
+
 
         getClients()
             .then(res => {
                 let advertisers = res.data
                 setAdvertiserOption(advertisers.map(advertiser => {
-                    if(client.salesOrgCompany.companyName === advertiser.companyName){
+                    if (client.salesOrgCompany.companyName === advertiser.companyName) {
                         let tempdata = { ...data, 'advertiser': { value: { value: advertiser.id, label: advertiser.companyName }, touched: true, valid: true } }
                         setOrderData({ ...orderData, data: tempdata })
                     }
@@ -46,7 +45,7 @@ function AddNewOrder({ next, previous, orderData, setOrderData, client, setOrder
                 )
             })
             .catch(err => alert(err.message))
-        
+
     }, [])
 
 
@@ -55,7 +54,6 @@ function AddNewOrder({ next, previous, orderData, setOrderData, client, setOrder
         for (let field in tempdata) {
             valid = valid && tempdata[field].valid
         }
-        console.log(valid)
         return valid;
     }
 
@@ -74,33 +72,32 @@ function AddNewOrder({ next, previous, orderData, setOrderData, client, setOrder
     }
 
     const createOrder = () => {
-        // let campaignData = {
-        //     "clientCompanyID": data.advertiser.value.value,
-        //     "title": data.title.value,
-        //     "description": data.description.value,
-        //     "landingpageURL": data.prefferedLandingPageUrl.value,
-        //     "targetMarket": data.targetMarket.value.value,
-        //     "distributionBudget": data.budget.value,
-        //     "startDate": new Date(),
-        //     "price": data.price.value,
-        //     "soaID": client.salesOrgCompany.soaID,
-        //     "sosID": client.salesOrgCompany.sosID,
-        //     "salesOrgCompanyID": client.salesOrgCompany.parentSalesOrgCompanyID,
-        //     "statusByPersonID": client.person.createdByPerson,
-        //     "statusWithPersonID": client.salesOrgCompany.clientPersonID
-        // }
-        // setIsLoading(true)
-        // createCampaign(campaignData)
-        //     .then(res => {
-        //     setIsLoading(false)
-        //         setOrderResponseData(res)
-        //         console.log(res.data)
-        //         next()
-        //     })
-        //     .catch(err => {
-        // setIsLoading(false)    
-        // alert(err)})
-        next()
+        let campaignData = {
+            "clientCompanyID": data.advertiser.value.value,
+            "title": data.title.value,
+            "description": data.description.value,
+            "landingpageURL": data.prefferedLandingPageUrl.value,
+            "targetMarket": data.targetMarket.value.value,
+            "distributionBudget": data.budget.value,
+            "startDate": new Date(),
+            "price": data.price.value,
+            "soaID": client.salesOrgCompany.soaID,
+            "sosID": client.salesOrgCompany.sosID,
+            "salesOrgCompanyID": client.salesOrgCompany.parentSalesOrgCompanyID,
+            "statusByPersonID": client.person.createdByPerson,
+            "statusWithPersonID": client.salesOrgCompany.clientPersonID
+        }
+        setIsLoading(true)
+        createCampaign(campaignData)
+            .then(res => {
+                setIsLoading(false)
+                setOrderResponseData(res)
+                next()
+            })
+            .catch(err => {
+                setIsLoading(false)
+                alert(err)
+            })
 
     }
 
@@ -117,23 +114,22 @@ function AddNewOrder({ next, previous, orderData, setOrderData, client, setOrder
                     <Row>
                         <Col md={6}>
                             <SelectField disabled={true} name="advertiser" onChange={onChangeHandler} value={data.advertiser.value} id='advertiser' options={advertiserOption} label='Advertiser' />
-                            {/* <FloatingInput error={data.advertiser.touched && !data.advertiser.valid ? 'inValid' : ''} name="advertiser" onChange={onChangeHandler} value={data.advertiser.value} type='name' label='Advertiser' placeholder='Advertiser' id="advertiser" for="floatingInput" /> */}
                         </Col>
                         <Col md={6}>
-                            <FloatingInput errrMessage='Please Enter Valid Title' error={data.title.touched && !data.title.valid ? 'inValid' : ''} name="title" onChange={onChangeHandler} value={data.title.value} type='name' label='Title' placeholder='Title' id="title" for="floatingInput" />
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col md={6}>
-                            <FloatingInput errrMessage='Please Enter Valid Preffered Landing URL' error={data.prefferedLandingPageUrl.touched && !data.prefferedLandingPageUrl.valid ? 'inValid' : ''} name="prefferedLandingPageUrl" onChange={onChangeHandler} value={data.prefferedLandingPageUrl.value} type='name' label='Preffered Landing Page URL' placeholder='Preffered Landing Page URL' id="prefferedLandingPageURL" for="floatingInput" />
-                        </Col>
-                        <Col md={6}>
-                            <FloatingInput errrMessage='Please Enter Valid Price' error={data.price.touched && !data.price.valid ? 'inValid' : ''} name="price" onChange={onChangeHandler} value={data.price.value} type="number" label='Price' placeholder='Price' id="price" for="floatingInput" />
+                            <FloatingInput errrMessage='Please Enter Valid Title' error={data.title.touched && !data.title.valid} name="title" onChange={onChangeHandler} value={data.title.value} type='name' label='Title' placeholder='Title' id="title" for="floatingInput" />
                         </Col>
                     </Row>
                     <Row>
                         <Col md={6}>
-                            <FloatingInput errrMessage='Please Enter Valid Description' error={data.description.touched && !data.description.valid ? 'inValid' : ''} name="description" id='description' label="description" value={data.description.value} type='textarea' placeholder='Description' changed={onChangeHandler} />
+                            <FloatingInput errrMessage='Please Enter Valid Preffered Landing URL' error={data.prefferedLandingPageUrl.touched && !data.prefferedLandingPageUrl.valid} name="prefferedLandingPageUrl" onChange={onChangeHandler} value={data.prefferedLandingPageUrl.value} type='name' label='Preffered Landing Page URL' placeholder='Preffered Landing Page URL' id="prefferedLandingPageURL" for="floatingInput" />
+                        </Col>
+                        <Col md={6}>
+                            <FloatingInput errrMessage='Please Enter Valid Price' error={data.price.touched && !data.price.valid} name="price" onChange={onChangeHandler} value={data.price.value} type="number" label='Price' placeholder='Price' id="price" for="floatingInput" />
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col md={6}>
+                            <FloatingInput errrMessage='Please Enter Valid Description' error={data.description.touched && !data.description.valid } name="description" id='description' label="description" value={data.description.value} type='textarea' placeholder='Description' onChange={onChangeHandler} />
 
                         </Col>
                     </Row>
@@ -147,15 +143,15 @@ function AddNewOrder({ next, previous, orderData, setOrderData, client, setOrder
                             <SelectField name="targetMarket" onChange={onChangeHandler} value={data.targetMarket.value} id='targetMarket' options={marketOption} label='Target Market' />
                         </Col>
                         <Col md={6}>
-                            <FloatingInput errrMessage='Please Enter Valid Budget' error={data.budget.touched && !data.budget.valid ? 'inValid' : ''} name="budget" onChange={onChangeHandler} value={data.budget.value} type='number' label='Budget' placeholder='Budget' id="budget" for="floatingInput" />
+                            <FloatingInput errrMessage='Please Enter Valid Budget' error={data.budget.touched && !data.budget.valid } name="budget" onChange={onChangeHandler} value={data.budget.value} type='number' label='Budget' placeholder='Budget' id="budget" for="floatingInput" />
                         </Col>
                     </Row>
                     <Row>
                         <Col>
-                            <Button className='addOrderButton' color="primary" onClick={createOrder} >
+                            <Button disabled={!orderData.validated} className='addOrderButton' color="primary" onClick={createOrder} >
                                 Create Order<i className='fa fa-angle-double-right pl-1' aria-hidden="true"></i></Button>
-                            <Button className='addOrderCancelButton'>Cancel</Button>
-                            <Button className='addOrderBackButton' color="primary" onClick={previous}>
+                            <Button disabled={true} onClick={() => props.history.push('/dashboard')} className='addOrderCancelButton'>Cancel</Button>
+                            <Button disabled={true} className='addOrderBackButton' color="primary" onClick={previous}>
                                 <i className='fa fa-angle-double-left pr-1' aria-hidden="true"></i>Back</Button>
                         </Col>
                     </Row>
@@ -178,4 +174,4 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(AddNewOrder)
+export default connect(mapStateToProps, mapDispatchToProps)(AddNewOrder)

@@ -1,4 +1,5 @@
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
+import './table.css'
 
 export const COLUMNS = [
   {
@@ -8,7 +9,7 @@ export const COLUMNS = [
   {
     Header: 'Title/Details',
     accessor: d => d.title,
-    Cell: (e) => (<Link to={{ pathname: `/campaigndetail/${e.data[e.row.id].campaignID}`}}>{e.value}</Link>)
+    Cell: (e) => (<Link className='campaignDetailLink' to={{ pathname: `/campaigndetail/${e.data[e.row.id].campaignID}`}}>{e.value}</Link>)
   },
   {
     Header: 'Advertiser',

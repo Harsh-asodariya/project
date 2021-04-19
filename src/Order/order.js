@@ -6,8 +6,7 @@ import AddAssets from '../Forms/AddAssets/addAssets';
 import AddNewAdvertiser from '../Forms/AddNewAdvertiser/addNewAdvertiser';
 import AddNewOrder from '../Forms/AddNewOrder/addNewOrder';
 
-const Order = () => {
-
+const Order = (props) => {
   const [currentStep, setCurrentStep] = useState(1)
   const [advertiserData, setAdvertiserData] = useState({
     data: {
@@ -62,9 +61,9 @@ const Order = () => {
 
   const [assets, setAssets] = useState({
     data: {
-      scriptFile: { value: null, touched: false, valid: false },
-      voiceFile: { value: null, touched: false, valid: false },
-      advertiserAssets: { value: null, touched: true, valid: true },
+      scriptFile: { value: null },
+      voiceFile: { value: null },
+      advertiserAssets: { value: null },
     },
     validated: false
   })
@@ -79,13 +78,13 @@ const Order = () => {
 
   let form
   if (currentStep === 1) {
-    form = <AddNewAdvertiser next={nextHandleClick} advertiserData={advertiserData} setAdvertiserData={setAdvertiserData} />
+    form = <AddNewAdvertiser props={props} next={nextHandleClick} advertiserData={advertiserData} setAdvertiserData={setAdvertiserData} />
   }
   else if (currentStep === 2) {
-    form = <AddNewOrder next={nextHandleClick} previous={previousHandleClick} orderData={orderData} setOrderData={setOrderData} />
+    form = <AddNewOrder props={props} next={nextHandleClick} previous={previousHandleClick} orderData={orderData} setOrderData={setOrderData} />
   }
   else if (currentStep === 3) {
-    form = <AddAssets previous={previousHandleClick} assets={assets} setAssets={setAssets} />
+    form = <AddAssets props={props} previous={previousHandleClick} assets={assets} setAssets={setAssets} />
   }
 
   return (
@@ -99,9 +98,6 @@ const Order = () => {
       </div>
       <div>
         {form}
-
-        {/* <button onClick={() => this.handleClick()}>Previous</button>
-            <button onClick={() => this.handleClick("next")}>Next</button> */}
       </div>
     </div>
   );

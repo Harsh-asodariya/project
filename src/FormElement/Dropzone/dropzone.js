@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { Button, Col, Row, Spinner } from 'reactstrap';
 import './dropzone.css';
-import { Link } from 'react-router-dom';
 import { uploadFile, getPersonById } from '../../Api/Api';
 import { connect } from 'react-redux';
 
@@ -31,7 +30,8 @@ const Dropzone = (props) => {
     const [isLoading, setIsLoading] = useState(false)
     let formData = new FormData()
     formData.append('type', props.fileType)
-    formData.append('uploadedBy', localStorage.getItem('personId'))
+    let personData = JSON.parse(localStorage.getItem('personData'))
+    formData.append('uploadedBy', personData.id)
     if(props.campaignID){
         formData.append('campaignID', props.campaignID)
     } else {
@@ -81,13 +81,10 @@ const Dropzone = (props) => {
                 <Col className='backgroundGrey my-3'>
                     {props.label}
                 </Col>
-                {/* <Col>
-                    <Link to={props.file[0].assetUrl} target="_blank" download={props.file[0].assetOrignalName} style={{ color: 'red' }}>Download</Link>
-                </Col> */}
             </Row>
             <Row className='uploadedfile'>
                 <Col md={1}>
-                    <i class="fa-file fa fa-3x  text-primary mr-3"></i>
+                    <i className="fa-file fa fa-3x  text-primary mr-3"></i>
                 </Col>
                 <Col md={11}>
                     <Row>
@@ -142,8 +139,6 @@ const Dropzone = (props) => {
 
         </>
     }
-    // const { acceptedFiles, getRootProps, getInputProps } = useDropzone({ onDrop, maxFiles: 1 });props.file[0].name
-
     return dropzone
 }
 

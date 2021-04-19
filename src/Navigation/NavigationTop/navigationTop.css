@@ -4,6 +4,11 @@
     justify-content: space-between;
     padding: 0 2rem;
     flex-wrap: wrap;
+    background-color: white;
+}
+
+.navTopDropdown{
+    z-index: 1100 !important;
 }
 
 .circleButton{
@@ -56,13 +61,3 @@
 .dropdown-item {
     padding:  0 !important;
 }
-
-/* .signOutButton{
-    color: #ff0000 !important;
-} */
-
-/* .dropdown-toggle{
-    padding: 0px !important;
-    width:fit-content !important;
-    align-items: center;
-} */

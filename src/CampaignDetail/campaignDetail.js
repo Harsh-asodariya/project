@@ -9,7 +9,7 @@ import BackDrop from '../Shared/Backdrop/Backdrop';
 import Spinner from '../Shared/Spinner/Spinner';
 import { Table } from 'reactstrap'
 
-function CampaignDetail() {
+function CampaignDetail(props) {
     const { id } = useParams();
     const [campaignData, setCampaignData] = useState({
         advertiser: '',
@@ -69,8 +69,8 @@ function CampaignDetail() {
         <BackDrop show={isLoading}><Spinner /></BackDrop>
         <NavigationItems />
         <div className='campaignDetailBackground'>
-            <div className='container'>
-                <div className='top-section column py-4'>
+            <div className='campaignDetailPage'>
+                <div className='top-section column p-4'>
                     <Row>
                         <Col><h6>Advertiser</h6><p>{campaignData.advertiser}</p></Col>
                         <Col><h6>Order Name</h6><p>{campaignData.orderName}</p></Col>
@@ -83,7 +83,7 @@ function CampaignDetail() {
                         <Col><h6>Status</h6><p>text</p></Col>
                         <Col><h6>Action Required By</h6><p>{campaignData.actionRequiredBy}</p></Col>
                         <Col><h6>Next Action Due By</h6><p>text</p></Col>
-                        <Col><i class="fa fa-refresh" aria-hidden="true"></i></Col>
+                        <Col><i className="fa fa-refresh" aria-hidden="true"></i></Col>
                     </Row>
                 </div>
                 <div className='bottom-section column px-5 py-3'>
@@ -110,7 +110,7 @@ function CampaignDetail() {
                 </Col>
                     </Row>
                     <Row>
-                        <i class="fa fa-download" style={{ color: '#01a1dd', fontWeight: 'bold' }} aria-hidden="true"> Download all assets</i>
+                        <i className="fa fa-download" style={{ color: '#01a1dd', fontWeight: 'bold' }} aria-hidden="true"> Download all assets</i>
                     </Row>
                     <Row>
                         <Col>
@@ -133,8 +133,8 @@ function CampaignDetail() {
                             Advertiser Assets
     </Col>
                     </Row>
-                    <Row>
-                        <Table className='responsive-table striped'>
+                    <div className='advertiserAssetsTable'>
+                        <Table className='striped'>
                             <thead>
                                 <tr>
                                     <th>File Name</th>
@@ -160,29 +160,28 @@ function CampaignDetail() {
                                 }
                             </tbody>
                         </Table>
-                    </Row>
-
+                    </div>
                     <Row className='mt-3'>
                         Order
             <hr />
                     </Row>
-                    <Row className='mb-3'>
-                        <Col md={4}><h6>Description</h6><p>{campaignData.description}</p></Col>
+                    <Row >
+                        <Col className='mb-3' md={4}><h6>Description</h6><p>{campaignData.description}</p></Col>
                     </Row>
-                    <Row className='mb-3'>
-                        <Col md={4}><h6>Preffered landing website url</h6><p>{campaignData.landingWebsiteURL}</p></Col>
-                        <Col md={4}><h6>Distribution Budget</h6><p>{campaignData.distributionBudget}</p></Col>
+                    <Row >
+                        <Col className='mb-3' md={4}><h6>Preffered landing website url</h6><p>{campaignData.landingWebsiteURL}</p></Col>
+                        <Col className='mb-3' md={4}><h6>Distribution Budget</h6><p>{campaignData.distributionBudget}</p></Col>
                     </Row>
-                    <Row className='mb-3'>
-                        <Col md={4}><h6>Target market</h6><p>{campaignData.targetMarket}</p></Col>
-                        <Col md={4}><h6>Industry Category</h6><p>{campaignData.industryCategory}</p></Col>
-                        <Col md={4}><h6>Order Dates</h6><p>text</p></Col>
+                    <Row >
+                        <Col className='mb-3' md={4}><h6>Target market</h6><p>{campaignData.targetMarket}</p></Col>
+                        <Col className='mb-3' md={4}><h6>Industry Category</h6><p>{campaignData.industryCategory}</p></Col>
+                        <Col className='mb-3' md={4}><h6>Order Dates</h6><p>text</p></Col>
                     </Row>
                     <Row>
                         <Col>
                             <Button className='downloadAllButton' color="primary"  >
                                 Download All Assets</Button>
-                            <Button className='backButton'>
+                            <Button className='backButton' onClick={() => props.history.goBack()}>
                                 Back</Button>
 
                             <Button className='editButton' color='primary'>Edit</Button>

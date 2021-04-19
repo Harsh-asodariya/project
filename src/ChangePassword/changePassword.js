@@ -39,7 +39,6 @@ const ChangePassword = props => {
                     alert(err.message)})
             
         } else {
-            console.log(props.token)
             alert('Password does not match')
         }
     }

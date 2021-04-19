@@ -5,7 +5,7 @@ import Dropzone from '../../FormElement/Dropzone/dropzone';
 import { Link } from 'react-router-dom';
 import { getPersonById } from '../../Api/Api';
 
-function AddAssets({ previous, assets, setAssets }) {
+function AddAssets({ previous, assets, setAssets, props }) {
 
     const data = { ...assets.data }
 
@@ -28,30 +28,16 @@ function AddAssets({ previous, assets, setAssets }) {
     }, [data.advertiserAssets.value])
 
     const submitEventHandler = () => {
-        console.log(assets)
-    }
-
-    const submitButtonHandler = (tempdata) => {
-        let valid = true
-        for (let field in tempdata) {
-            valid = valid && tempdata[field].valid
-        }
-        console.log(valid)
-        return valid;
+        props.history.push('/dashboard')
     }
 
     const onChangeHandler = (acceptedFile, name) => {
         if (name === 'advertiserAssets' && data.advertiserAssets.value !== null) {
-            // console.log('in advertiser')
-            let tempdata = { ...data, [name]: { value: data.advertiserAssets.value.concat(acceptedFile), touched: true, valid: true } }
-            let validated = submitButtonHandler(tempdata)
-            console.log(tempdata)
-            setAssets({ ...assets, data: tempdata, validated: validated })
+            let tempdata = { ...data, [name]: { value: data.advertiserAssets.value.concat(acceptedFile) } }
+            setAssets({ ...assets, data: tempdata })
         } else {
-            let tempdata = { ...data, [name]: { value: acceptedFile, touched: true, valid: true } }
-            let validated = submitButtonHandler(tempdata)
-            console.log(tempdata)
-            setAssets({ ...assets, data: tempdata, validated: validated })
+            let tempdata = { ...data, [name]: { value: acceptedFile } }
+            setAssets({ ...assets, data: tempdata})
         }
     }
 
@@ -80,13 +66,12 @@ function AddAssets({ previous, assets, setAssets }) {
                                 "July", "Aug", "Sep", "Oct", "Nov", "Dec"
                             ];
                             var fromDate = new Date(file.updatedAt);
-                            console.log(personName)
 
                             return <tr key={file.id}>
                                 <td md={4}>{file.assetOrignalName}</td>
                                 <td md={3}>{personName[file.uploadedBy]}</td>
                                 <td md={3}>{fromDate.getDate() + '-' + monthNames[fromDate.getMonth()] + '-' + fromDate.getFullYear()}</td>
-                                <td md={2}><Button onClick={() => window.open(file.assetUrl,'_blank')}>Download</Button></td>
+                                <td md={2}><Button onClick={() => window.open(file.assetUrl, '_blank')}>Download</Button></td>
                             </tr>
                         })
                     }
@@ -103,8 +88,8 @@ function AddAssets({ previous, assets, setAssets }) {
 
                 {table}
                 <Button className='addAssetsButton' color="primary" onClick={submitEventHandler}>Done</Button>
-                <Button className='addAssetsCancelButton'>Cancel</Button>
-                <Button className='addAssetsBackButton' color="primary" onClick={previous}>
+                <Button className='addAssetsCancelButton' onClick={() => props.history.push('/dashboard')}>Cancel</Button>
+                <Button disabled={true} className='addAssetsBackButton' color="primary" onClick={previous}>
                     <i className='fa fa-angle-double-left pr-1' aria-hidden="true"></i>Back</Button>
             </div>
         </div>

@@ -22,6 +22,8 @@ const reducer = (state = initialState, action) => {
                 token:action.token
             }
         case actionTypes.SIGN_OUT:
+            localStorage.removeItem('token');
+            localStorage.removeItem('personData');
             return{
                 ...initialState
             }

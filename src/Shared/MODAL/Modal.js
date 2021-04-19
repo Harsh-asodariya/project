@@ -1,12 +1,7 @@
 import React from 'react';
 import './Modal.css';
-import Spinner from '../Spinner/Spinner';
 
 const modal = props => {
-
-    // shouldComponentUpdate(nextProps, nextState) {
-    //     return nextProps.show !== this.props.show || nextProps.children !== this.props.children;
-    // }
 
     return (
         <>
